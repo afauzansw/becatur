@@ -1,13 +1,14 @@
 <?php
 
-use App\Http\Controllers\Api\Auth\AuthApiController;
+use App\Http\Controllers\Api\Driver\ReservationDriverController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(
-    ['prefix' => 'auth', 'as' => 'auth.'],
+    ['prefix' => 'driver/reservation', 'as' => 'driver.reservation.'],
     function () {
-        Route::post('login', [AuthApiController::class, 'attempt'])->name('login');
-        Route::post('register', [AuthApiController::class, 'store'])->name('register');
-        Route::post('logout', [AuthApiController::class, 'logout'])->name('logout');
+        Route::get('', [ReservationDriverController::class, 'index'])->name('index');
+        Route::get('{id}', [ReservationDriverController::class, 'show'])->name('show');
+        Route::put('{id}/accept', [ReservationDriverController::class, 'accept'])->name('accept');
+        Route::put('{id}/cancel', [ReservationDriverController::class, 'cancel'])->name('cancel');
     }
 );

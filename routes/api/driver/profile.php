@@ -1,13 +1,12 @@
 <?php
 
-use App\Http\Controllers\Api\Auth\AuthApiController;
+use App\Http\Controllers\Api\Driver\ProfileDriverController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(
-    ['prefix' => 'auth', 'as' => 'auth.'],
+    ['prefix' => 'driver/profile', 'as' => 'driver.profile.'],
     function () {
-        Route::post('login', [AuthApiController::class, 'attempt'])->name('login');
-        Route::post('register', [AuthApiController::class, 'store'])->name('register');
-        Route::post('logout', [AuthApiController::class, 'logout'])->name('logout');
+        Route::get('', [ProfileDriverController::class, 'index'])->name('index');
+        Route::post('', [ProfileDriverController::class, 'update'])->name('update');
     }
 );

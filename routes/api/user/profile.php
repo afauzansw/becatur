@@ -1,13 +1,12 @@
 <?php
 
-use App\Http\Controllers\Api\Auth\AuthApiController;
+use App\Http\Controllers\Api\User\ProfileUserController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(
-    ['prefix' => 'auth', 'as' => 'auth.'],
+    ['prefix' => 'user/profile', 'as' => 'user.profile.'],
     function () {
-        Route::post('login', [AuthApiController::class, 'attempt'])->name('login');
-        Route::post('register', [AuthApiController::class, 'store'])->name('register');
-        Route::post('logout', [AuthApiController::class, 'logout'])->name('logout');
+        Route::get('', [ProfileUserController::class, 'index'])->name('index');
+        Route::post('', [ProfileUserController::class, 'update'])->name('update');
     }
 );
