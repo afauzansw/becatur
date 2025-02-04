@@ -14,7 +14,7 @@ export default function Login(args: LoginProps) {
   const { data, setData, post, processing, errors, reset } = useForm({
     email: '',
     password: '',
-    remember: ''
+    // remember: ''
   });
 
   useEffect(() => {
