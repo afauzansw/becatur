@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Service\Admin;
+namespace App\Service\Reservation;
 
-use App\Contract\Admin\AdminContract;
-use App\Models\Admin;
+use App\Contract\Reservation\ReservationContract;
+use App\Models\Reservation;
 use App\Service\BaseService;
-use Exception;
 use Illuminate\Database\Eloquent\Model;
 
-class AdminService extends BaseService implements AdminContract
+class ReservationService extends BaseService implements ReservationContract
 {
     protected array $relation = [];
     protected string|null $guard = null;
@@ -16,7 +15,7 @@ class AdminService extends BaseService implements AdminContract
     protected array $fileKeys = [];
     protected Model $model;
 
-    public function __construct(Admin $model)
+    public function __construct(Reservation $model)
     {
         $this->model = $model;
     }
