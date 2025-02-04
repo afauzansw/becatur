@@ -9,6 +9,6 @@ Route::group(
         Route::get('', [ReservationDriverController::class, 'index'])->name('index');
         Route::get('{id}', [ReservationDriverController::class, 'show'])->name('show');
         Route::put('{id}/accept', [ReservationDriverController::class, 'accept'])->name('accept');
-        Route::put('{id}/cancel', [ReservationDriverController::class, 'cancel'])->name('cancel');
+        Route::put('{id}/reject', [ReservationDriverController::class, 'reject'])->name('reject');
     }
 );
