@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRegisterRequest;
 use App\Utils\WebResponse;
 use App\Contract\Auth\UserAuthContract;
-use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Requests\LoginRequest;
 
 class AuthApiController extends Controller
 {
@@ -37,5 +37,11 @@ class AuthApiController extends Controller
     {
         $result = $this->service->logout();
         return WebResponse::json($result, 'Successfully logout.');
+    }
+
+    public function refreshToken()
+    {
+        $result = $this->service->logout();
+        return WebResponse::json($result, 'Successfully refresh token.');
     }
 }

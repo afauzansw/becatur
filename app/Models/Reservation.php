@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Reservation extends Model
 {
-    /** @use HasFactory<\Database\Factories\ReservationFactory> */
     use HasFactory;
+
+    protected $guarded = [];
 }

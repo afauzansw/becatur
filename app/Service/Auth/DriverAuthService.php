@@ -2,15 +2,15 @@
 
 namespace App\Service\Auth;
 
-use App\Contract\Auth\UserAuthContract;
+use App\Contract\Auth\DriverAuthContract;
 use App\Models\User;
 use App\Service\AuthBaseService;
 use Illuminate\Database\Eloquent\Model;
 
-class UserAuthService extends AuthBaseService implements UserAuthContract
+class DriverAuthService extends AuthBaseService implements DriverAuthContract
 {
     protected string $username = 'email';
-    protected string|null $guard = 'user';
+    protected string|null $guard = 'driver';
     protected string|null $guardForeignKey = null;
     protected bool $withToken = true;
     protected Model $model;

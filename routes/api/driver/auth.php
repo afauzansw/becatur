@@ -9,5 +9,6 @@ Route::group(
         Route::post('login', [AuthApiController::class, 'attempt'])->name('login');
         Route::post('register', [AuthApiController::class, 'store'])->name('register');
         Route::post('logout', [AuthApiController::class, 'logout'])->name('logout');
+        Route::post('refresh', [AuthApiController::class, 'refreshToken'])->name('refresh');
     }
 );
