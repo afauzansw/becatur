@@ -161,7 +161,12 @@ class AuthBaseService implements AuthBaseContract
     public function logout(): Exception|bool
     {
         try {
-            Auth::guard($this->guard)->logout();
+            if($this->withToken) {
+                Auth::guard($this->guard)->logout(true);
+            } else {
+                Auth::guard($this->guard)->logout();
+            }
+
             return true;
         } catch (Exception $exception) {
             return $exception;
@@ -274,6 +279,38 @@ class AuthBaseService implements AuthBaseContract
             $reset->delete();
 
             DB::commit();
+
+            return true;
+        } catch (Exception $exception) {
+            DB::rollBack();
+            return $exception;
+        }
+    }
+
+    /**
+     * Refresh JWT token
+     *
+     * @param array $payloads
+     * @return array{access_token: bool, expires_in: int, token_type: string|bool|Exception}
+     */
+    public function refreshToken(): array|bool|Exception
+    {
+        try {
+            DB::beginTransaction();
+
+            if (!$login = Auth::guard($this->guard)->refresh()) {
+                return new Exception('Token Invalid.');
+            }
+
+            DB::commit();
+
+            if ($this->withToken) {
+                return [
+                    'access_token' => $login,
+                    'token_type' => 'bearer',
+                    'expires_in' => auth()->factory()->getTTL() * 60
+                ];
+            }
 
             return true;
         } catch (Exception $exception) {

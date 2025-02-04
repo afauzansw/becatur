@@ -19,4 +19,6 @@ interface AuthBaseContract
     public function validateOTP(array $payloads);
 
     public function resetPassword(array $payloads);
+
+    public function refreshToken();
 }

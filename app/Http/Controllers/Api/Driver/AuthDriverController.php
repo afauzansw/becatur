@@ -42,7 +42,7 @@ class AuthDriverController extends Controller
 
     public function refreshToken()
     {
-        $result = $this->service->logout();
+        $result = $this->service->refreshToken();
         return WebResponse::json($result, 'Successfully refresh token.');
     }
 }
