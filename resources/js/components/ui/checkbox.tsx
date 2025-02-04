@@ -1,3 +1,5 @@
+'use client';
+
 import { IconCheck, IconMinus } from 'justd-icons';
 import type {
   CheckboxGroupProps as CheckboxGroupPrimitiveProps,
@@ -42,7 +44,7 @@ const checkboxStyles = tv({
 });
 
 const boxStyles = tv({
-  base: 'flex size-4 shrink-0 items-center justify-center rounded border border-input text-bg transition *:data-[slot=icon]:size-3',
+  base: 'flex size-4 *:data-[slot=icon]:size-3 shrink-0 items-center justify-center rounded border border-input text-bg transition',
   variants: {
     isSelected: {
       false: 'bg-muted',
@@ -81,7 +83,8 @@ const Checkbox = ({ className, ...props }: CheckboxProps) => {
           <div
             className={boxStyles({
               ...renderProps,
-              isSelected: isSelected || isIndeterminate
+              isSelected: isSelected || isIndeterminate,
+              className: props.description ? 'mt-1' : 'mt-px'
             })}
           >
             {isIndeterminate ? <IconMinus /> : isSelected ? <IconCheck /> : null}
@@ -100,4 +103,3 @@ const Checkbox = ({ className, ...props }: CheckboxProps) => {
 };
 
 export { Checkbox, CheckboxGroup };
-export type { CheckboxGroupProps, CheckboxProps };

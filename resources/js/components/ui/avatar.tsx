@@ -1,9 +1,9 @@
-import { type VariantProps, tv } from 'tailwind-variants';
+import { tv } from 'tailwind-variants';
 
 const avatar = tv({
   base: [
     'inline-grid shrink-0 align-middle [--avatar-radius:20%] [--ring-opacity:20%] *:col-start-1 *:row-start-1',
-    '-outline-offset-1 outline-1 outline-fg/(--ring-opacity)'
+    'outline-1 -outline-offset-1 outline-fg/(--ring-opacity)'
   ],
   variants: {
     shape: {
@@ -11,7 +11,6 @@ const avatar = tv({
       circle: 'rounded-full *:rounded-full'
     },
     size: {
-      'extra-small': 'size-5 *:size-5',
       small: 'size-6 *:size-6',
       medium: 'size-8 *:size-8',
       large: 'size-10 *:size-10',
@@ -20,8 +19,10 @@ const avatar = tv({
   }
 });
 
-interface AvatarProps extends VariantProps<typeof avatar> {
+interface AvatarProps {
   src?: string | null;
+  shape?: 'square' | 'circle';
+  size?: 'small' | 'medium' | 'large' | 'extra-large';
   initials?: string;
   alt?: string;
   className?: string;
@@ -56,4 +57,3 @@ const Avatar = ({
 };
 
 export { Avatar };
-export type { AvatarProps };

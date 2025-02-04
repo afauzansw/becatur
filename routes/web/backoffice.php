@@ -1,11 +1,14 @@
 <?php
 
-// use App\Http\Controllers\Api\Auth\AuthApiController;
-// use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\Auth\AuthApiController;
+use App\Http\Controllers\Web\BackofficeWebController;
+use Illuminate\Support\Facades\Route;
 
-// Route::group(
-//     ['prefix' => 'backoffice', 'as' => 'backoffice.'],
-//     function () {
-//         Route::post('login', [AuthApiController::class, 'attempt'])->name('backoffice');
-//     }
-// );
+Route::redirect('/', '/backoffice');
+
+Route::group(
+    ['prefix' => 'backoffice', 'as' => 'backoffice.'],
+    function () {
+        Route::get('', [BackofficeWebController::class, 'index'])->name('index');
+    }
+);

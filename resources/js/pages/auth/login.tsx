@@ -25,7 +25,7 @@ export default function Login(args: LoginProps) {
   const submit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
-    post(route('login'));
+    post(route('web.auth.attempt'));
   };
 
   return (
@@ -69,9 +69,6 @@ export default function Login(args: LoginProps) {
         </div>
 
         <div className="flex items-center justify-between">
-          <Link href={route('register')} className={buttonStyles({ appearance: 'outline' })}>
-            Register
-          </Link>
 
           <Button isDisabled={processing} type="submit">
             Log in
@@ -83,5 +80,5 @@ export default function Login(args: LoginProps) {
 }
 
 Login.layout = (page: React.ReactNode) => {
-  return <GuestLayout header="Login" description="Log in to your account." children={page} />;
+  return <GuestLayout children={page} />;
 };

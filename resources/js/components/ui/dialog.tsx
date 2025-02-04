@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useRef } from 'react';
 
 import { IconX } from 'justd-icons';
@@ -5,24 +7,24 @@ import type { ButtonProps as ButtonPrimitiveProps, DialogProps, HeadingProps } f
 import { Button as ButtonPrimitive, Dialog as DialogPrimitive, Heading } from 'react-aria-components';
 import { tv } from 'tailwind-variants';
 
-import { useMediaQuery } from '@/utils/use-media-query';
 import { Button, type ButtonProps } from './button';
+import { useMediaQuery } from './primitive';
 
 const dialogStyles = tv({
   slots: {
     root: [
-      'peer/dialog group/dialog relative flex max-h-[inherit] flex-col overflow-hidden outline-hidden [scrollbar-width:thin] [&::-webkit-scrollbar]:size-0.5'
+      'relative peer group flex max-h-[inherit] not-has-data-[slot=dialog-body]:**:data-[slot=dialog-header]:pb-0 [&::-webkit-scrollbar]:size-0.5 [scrollbar-width:thin] flex-col overflow-hidden outline-hidden'
     ],
-    header:
-      'relative flex flex-col gap-0.5 p-4 sm:gap-1 sm:p-6 [&[data-slot=dialog-header]:has(+[data-slot=dialog-footer])]:pb-0',
-    description: 'text-muted-fg text-sm',
+    header: 'relative flex flex-col gap-0.5 sm:gap-1 p-4 sm:p-6',
+    description: 'text-sm text-muted-fg',
     body: [
-      'isolate flex flex-1 flex-col overflow-auto px-4 sm:px-6',
+      'has-[input]:py-1',
+      'flex flex-1 flex-col overflow-auto px-4 sm:px-6',
       'max-h-[calc(var(--visual-viewport-height)-var(--visual-viewport-vertical-padding)-var(--dialog-header-height,0px)-var(--dialog-footer-height,0px))]'
     ],
-    footer: 'isolate mt-auto flex flex-col-reverse justify-between gap-3 p-4 sm:flex-row sm:p-6',
+    footer: ['mt-auto flex flex-col-reverse justify-between gap-3 sm:flex-row', 'p-4 sm:p-6'],
     closeIndicator:
-      'close absolute top-1 right-1 z-50 grid size-8 place-content-center rounded-xl data-focused:bg-secondary data-hovered:bg-secondary data-focused:outline-hidden data-focus-visible:ring-1 data-focus-visible:ring-primary sm:top-2 sm:right-2 sm:size-7 sm:rounded-md'
+      'close absolute right-1 top-1 sm:right-2 sm:top-2 data-focused:outline-hidden data-focused:bg-secondary data-hovered:bg-secondary grid place-content-center rounded-xl sm:rounded-md data-focus-visible:ring-1 data-focus-visible:ring-primary size-8 sm:size-7 z-50'
   }
 });
 
@@ -79,26 +81,23 @@ const titleStyles = tv({
   }
 });
 
-interface DialogTitleProps extends Omit<HeadingProps, 'level'> {
+interface TitleProps extends Omit<HeadingProps, 'level'> {
   level?: 1 | 2 | 3 | 4;
-  ref?: React.Ref<HTMLHeadingElement>;
 }
-const Title = ({ level = 2, className, ref, ...props }: DialogTitleProps) => (
-  <Heading slot="title" level={level} ref={ref} className={titleStyles({ level, className })} {...props} />
+
+const Title = ({ level = 2, className, ...props }: TitleProps) => (
+  <Heading slot="title" level={level} className={titleStyles({ level, className })} {...props} />
 );
 
-type DialogDescriptionProps = React.ComponentProps<'div'>;
-const Description = ({ className, ref, ...props }: DialogDescriptionProps) => (
-  <div className={description({ className })} ref={ref} {...props} />
+const Description = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
+  <div className={description({ className })} {...props} />
 );
 
-type DialogBodyProps = React.ComponentProps<'div'>;
-const Body = ({ className, ref, ...props }: DialogBodyProps) => (
-  <div data-slot="dialog-body" ref={ref} className={body({ className })} {...props} />
+const Body = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
+  <div data-slot="dialog-body" className={body({ className })} {...props} />
 );
 
-type DialogFooterProps = React.ComponentProps<'div'>;
-const Footer = ({ className, ...props }: DialogFooterProps) => {
+const Footer = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => {
   const footerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -122,8 +121,8 @@ const Footer = ({ className, ...props }: DialogFooterProps) => {
   return <div ref={footerRef} data-slot="dialog-footer" className={footer({ className })} {...props} />;
 };
 
-const Close = ({ className, appearance = 'outline', ref, ...props }: ButtonProps) => {
-  return <Button slot="close" className={className} ref={ref} appearance={appearance} {...props} />;
+const Close = ({ className, appearance = 'outline', ...props }: ButtonProps) => {
+  return <Button slot="close" className={className} appearance={appearance} {...props} />;
 };
 
 interface CloseButtonIndicatorProps extends ButtonProps {
@@ -163,11 +162,3 @@ Dialog.Close = Close;
 Dialog.CloseIndicator = CloseIndicator;
 
 export { Dialog };
-export type {
-  CloseButtonIndicatorProps,
-  DialogBodyProps,
-  DialogDescriptionProps,
-  DialogFooterProps,
-  DialogHeaderProps,
-  DialogTitleProps
-};

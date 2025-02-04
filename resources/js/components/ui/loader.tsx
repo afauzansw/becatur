@@ -1,3 +1,5 @@
+'use client';
+
 import { cn } from '@/utils/classes';
 import { IconLoader } from 'justd-icons';
 import { ProgressBar } from 'react-aria-components';
@@ -168,7 +170,7 @@ const LOADERS = {
   spin: Spin
 };
 
-const DEFAULT_SPINNER = 'spin';
+const DEFAULT_SPINNER = 'ring';
 
 interface LoaderProps
   extends Omit<React.ComponentPropsWithoutRef<'svg'>, 'display' | 'opacity' | 'intent'>,

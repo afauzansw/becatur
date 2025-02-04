@@ -1,7 +1,7 @@
 import { tv } from 'tailwind-variants';
 
 const headingStyles = tv({
-  base: 'font-sans text-fg tracking-tight',
+  base: 'font-sans tracking-tight text-fg',
   variants: {
     level: {
       1: 'font-bold text-xl sm:text-2xl',
@@ -41,4 +41,3 @@ const Heading = ({ className, tracking = 'normal', level = 1, ...props }: Headin
 };
 
 export { Heading };
-export type { HeadingProps };

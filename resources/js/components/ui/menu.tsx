@@ -1,3 +1,5 @@
+'use client';
+
 import { createContext, use } from 'react';
 
 import { IconBulletFill, IconCheck, IconChevronLgRight } from 'justd-icons';
@@ -5,9 +7,10 @@ import type {
   ButtonProps,
   MenuItemProps as MenuItemPrimitiveProps,
   MenuProps as MenuPrimitiveProps,
-  MenuSectionProps as MenuSectionPrimitiveProps,
+  MenuSectionProps,
   MenuTriggerProps as MenuTriggerPrimitiveProps,
-  PopoverProps
+  PopoverProps,
+  SeparatorProps
 } from 'react-aria-components';
 import {
   Button,
@@ -17,21 +20,17 @@ import {
   Menu as MenuPrimitive,
   MenuSection,
   MenuTrigger as MenuTriggerPrimitive,
+  Separator,
   SubmenuTrigger as SubmenuTriggerPrimitive,
   composeRenderProps
 } from 'react-aria-components';
 import type { VariantProps } from 'tailwind-variants';
 import { tv } from 'tailwind-variants';
 
+import { composeTailwindRenderProps } from '@/components/ui/primitive';
 import { cn } from '@/utils/classes';
-import {
-  DropdownItemDetails,
-  DropdownKeyboard,
-  DropdownLabel,
-  DropdownSeparator,
-  dropdownItemStyles,
-  dropdownSectionStyles
-} from './dropdown';
+import { DropdownItemDetails, dropdownItemStyles, dropdownSectionStyles } from './dropdown';
+import { Keyboard } from './keyboard';
 import { Popover } from './popover';
 
 interface MenuContextProps {
@@ -60,10 +59,10 @@ const SubMenu = ({ delay = 0, ...props }) => (
 
 const menuStyles = tv({
   slots: {
-    menu: 'grid max-h-[calc(var(--visual-viewport-height)-10rem)] grid-cols-[auto_1fr] overflow-auto rounded-xl p-1 outline-hidden [clip-path:inset(0_0_0_0_round_calc(var(--radius-lg)-2px))] sm:max-h-[inherit]',
-    popover: 'z-50 p-0 shadow-xs outline-hidden sm:min-w-40',
+    menu: 'max-h-[calc(var(--visual-viewport-height)-10rem)] sm:max-h-[inherit] overflow-auto rounded-xl p-1 outline-hidden [clip-path:inset(0_0_0_0_round_calc(var(--radius-lg)-2px))]',
+    popover: 'z-50 sm:min-w-40 p-0 outline-hidden shadow-xs',
     trigger: [
-      'relative inline text-left data-focused:outline-hidden data-pressed:outline-hidden data-focus-visible:ring-1 data-focus-visible:ring-primary'
+      'inline relative text-left data-focused:outline-hidden data-focus-visible:ring-1 data-focus-visible:ring-primary data-pressed:outline-hidden'
     ]
   }
 });
@@ -72,11 +71,10 @@ const { menu, popover, trigger } = menuStyles();
 
 interface MenuTriggerProps extends ButtonProps {
   className?: string;
-  ref?: React.Ref<HTMLButtonElement>;
 }
 
-const MenuTrigger = ({ className, ref, ...props }: MenuTriggerProps) => (
-  <Button ref={ref} data-slot="menu-trigger" className={trigger({ className })} {...props}>
+const Trigger = ({ className, ...props }: MenuTriggerProps) => (
+  <Button data-slot="menu-trigger" className={trigger({ className })} {...props}>
     {(values) => <>{typeof props.children === 'function' ? props.children(values) : props.children}</>}
   </Button>
 );
@@ -88,7 +86,7 @@ interface MenuContentProps<T> extends Omit<PopoverProps, 'children' | 'style'>, 
   respectScreen?: boolean;
 }
 
-const MenuContent = <T extends object>({
+const Content = <T extends object>({
   className,
   showArrow = false,
   popoverClassName,
@@ -100,7 +98,10 @@ const MenuContent = <T extends object>({
       respectScreen={respectScreen}
       showArrow={showArrow}
       className={popover({
-        className: popoverClassName
+        className: cn([
+          showArrow && 'data-[placement=left]:mt-[-0.38rem] data-[placement=right]:mt-[-0.38rem]',
+          popoverClassName
+        ])
       })}
       {...props}
     >
@@ -120,13 +121,7 @@ const Item = ({ className, isDanger = false, children, ...props }: MenuItemProps
       className={composeRenderProps(className, (className, renderProps) =>
         dropdownItemStyles({
           ...renderProps,
-          className: renderProps.hasSubmenu
-            ? cn([
-                'data-open:data-danger:bg-danger/20 data-open:data-danger:text-danger',
-                'data-open:bg-accent data-open:text-accent-fg data-open:*:data-[slot=icon]:text-accent-fg data-open:*:[.text-muted-fg]:text-accent-fg',
-                className
-              ])
-            : className
+          className
         })
       )}
       textValue={textValue}
@@ -135,25 +130,8 @@ const Item = ({ className, isDanger = false, children, ...props }: MenuItemProps
     >
       {(values) => (
         <>
-          {values.isSelected && (
-            <>
-              {values.selectionMode === 'single' && (
-                <span
-                  data-slot="bullet-icon"
-                  className="**:data-[slot=indicator]:-mx-0.5 -mx-0.5 mr-2 flex size-4 shrink-0 items-center justify-center **:data-[slot=indicator]:size-2.5 **:data-[slot=indicator]:shrink-0"
-                >
-                  <IconBulletFill data-slot="indicator" />
-                </span>
-              )}
-              {values.selectionMode === 'multiple' && (
-                <IconCheck className="-mx-0.5 mr-2 size-4" data-slot="checked-icon" />
-              )}
-            </>
-          )}
-
           {typeof children === 'function' ? children(values) : children}
-
-          {values.hasSubmenu && <IconChevronLgRight data-slot="chevron" className="absolute right-2 size-3.5" />}
+          {values.hasSubmenu && <IconChevronLgRight className="ml-auto gpfw size-3.5" />}
         </>
       )}
     </MenuItem>
@@ -167,7 +145,7 @@ export interface MenuHeaderProps extends React.ComponentProps<typeof Header> {
 const MenuHeader = ({ className, separator = false, ...props }: MenuHeaderProps) => (
   <Header
     className={cn(
-      'col-span-full px-2.5 py-2 font-semibold text-base sm:text-sm',
+      'p-2 font-semibold text-base sm:text-sm',
       separator && '-mx-1 border-b px-4 py-3 sm:px-3 sm:pb-[0.625rem]',
       className
     )}
@@ -175,34 +153,71 @@ const MenuHeader = ({ className, separator = false, ...props }: MenuHeaderProps)
   />
 );
 
+const MenuSeparator = ({ className, ...props }: SeparatorProps) => (
+  <Separator className={cn('-mx-1 my-1 h-px border-b', className)} {...props} />
+);
+
+const Checkbox = ({ className, children, ...props }: MenuItemProps) => (
+  <Item className={composeTailwindRenderProps(className, 'relative pr-8')} {...props}>
+    {(values) => (
+      <>
+        {typeof children === 'function' ? children(values) : children}
+        {values.isSelected && (
+          <span className="flex absolute right-2 justify-center items-center size-4 shrink-0 animate-in">
+            <IconCheck />
+          </span>
+        )}
+      </>
+    )}
+  </Item>
+);
+
+const Radio = ({ children, ...props }: MenuItemProps) => (
+  <Item {...props}>
+    {(values) => (
+      <>
+        {typeof children === 'function' ? children(values) : children}
+
+        {values.isSelected && (
+          <span
+            data-slot="menu-radio"
+            className="absolute right-3 flex animate-in items-center justify-center **:data-[slot=indicator]:size-2.5 **:data-[slot=indicator]:shrink-0"
+          >
+            <IconBulletFill data-slot="indicator" />
+          </span>
+        )}
+      </>
+    )}
+  </Item>
+);
+
 const { section, header } = dropdownSectionStyles();
 
-interface MenuSectionProps<T> extends MenuSectionPrimitiveProps<T> {
-  ref?: React.Ref<HTMLDivElement>;
+interface SectionProps<T> extends MenuSectionProps<T> {
   title?: string;
 }
 
-const Section = <T extends object>({ className, ref, ...props }: MenuSectionProps<T>) => {
+const Section = <T extends object>({ className, ...props }: SectionProps<T>) => {
   return (
-    <MenuSection ref={ref} className={section({ className })} {...props}>
+    <MenuSection className={section({ className })} {...props}>
       {'title' in props && <Header className={header()}>{props.title}</Header>}
       <Collection items={props.items}>{props.children}</Collection>
     </MenuSection>
   );
 };
 
-Menu.Keyboard = DropdownKeyboard;
 Menu.Primitive = MenuPrimitive;
-Menu.Content = MenuContent;
+Menu.Content = Content;
 Menu.Header = MenuHeader;
 Menu.Item = Item;
-Menu.Content = MenuContent;
+Menu.Content = Content;
+Menu.Keyboard = Keyboard;
+Menu.Checkbox = Checkbox;
+Menu.Radio = Radio;
 Menu.Section = Section;
-Menu.Separator = DropdownSeparator;
-Menu.Trigger = MenuTrigger;
+Menu.Separator = MenuSeparator;
+Menu.Trigger = Trigger;
 Menu.ItemDetails = DropdownItemDetails;
 Menu.Submenu = SubMenu;
-Menu.Label = DropdownLabel;
 
-export { Menu };
-export type { MenuContentProps, MenuItemProps, MenuProps, MenuSectionProps, MenuTriggerProps };
+export { Menu, type MenuContentProps };

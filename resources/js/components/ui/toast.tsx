@@ -1,3 +1,5 @@
+'use client';
+
 import { useTheme } from '@/components/theme-provider';
 import { cn } from '@/utils/classes';
 import {
@@ -34,8 +36,8 @@ const Toast = ({ ...props }: ToasterProps) => {
             'has-data-description:**:data-title:font-medium [&:has([data-description])_[data-title]]:text-base!',
             'has-data-[slot=icon]:**:data-content:pl-0',
             'has-data-button:*:data-content:mb-10',
-            'has-data-button:**:data-close-button:hidden! flex w-full rounded-xl p-4',
-            'inset-ring-1 inset-ring-current/10 backdrop-blur-3xl'
+            'has-data-button:**:data-close-button:hidden! w-full flex p-4 rounded-xl',
+            'backdrop-blur-3xl inset-ring-1 inset-ring-current/10'
           ),
           icon: 'absolute top-[0.2rem] [--toast-icon-margin-end:7px] *:data-[slot=icon]:text-fg *:data-[slot=icon]:size-4.5 **:data-[slot=icon]:text-current',
           title: '',
@@ -69,4 +71,3 @@ const Toast = ({ ...props }: ToasterProps) => {
 };
 
 export { Toast };
-export type { ToasterProps };

@@ -1,10 +1,18 @@
-import { IconChevronLgDown } from 'justd-icons';
-import type { ListBoxProps, SelectProps as SelectPrimitiveProps, ValidationResult } from 'react-aria-components';
-import { Button, Select as SelectPrimitive, SelectValue, composeRenderProps } from 'react-aria-components';
-import { tv } from 'tailwind-variants';
+'use client';
 
 import type { Placement } from '@react-types/overlays';
-import { DropdownItem, DropdownItemDetails, DropdownLabel, DropdownSection, DropdownSeparator } from './dropdown';
+import { IconChevronLgDown } from 'justd-icons';
+import {
+  Button,
+  Select as SelectPrimitive,
+  type SelectProps as SelectPrimitiveProps,
+  SelectValue,
+  type ValidationResult,
+  composeRenderProps
+} from 'react-aria-components';
+import { tv } from 'tailwind-variants';
+
+import { DropdownItem, DropdownItemDetails, DropdownSection } from './dropdown';
 import { Description, FieldError, Label } from './field';
 import { ListBox } from './list-box';
 import { Popover } from './popover';
@@ -13,7 +21,7 @@ import { composeTailwindRenderProps, focusStyles } from './primitive';
 const selectTriggerStyles = tv({
   extend: focusStyles,
   base: [
-    'btr flex h-10 w-full cursor-default items-center items-center gap-4 gap-x-2 rounded-lg border border-input py-2 pr-2 pl-3 text-start shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)] transition **:data-[slot=icon]:size-4 group-data-disabled:opacity-50 dark:shadow-none',
+    'btr **:data-[slot=icon]:size-4 group-data-disabled:opacity-50 flex h-10 w-full cursor-default items-center gap-4 rounded-lg border border-input py-2 pl-3 pr-2 text-start shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)] transition dark:shadow-none',
     'group-data-open:border-ring/70 group-data-open:ring-4 group-data-open:ring-ring/20',
     'text-fg group-data-invalid:border-danger group-data-invalid:ring-danger/20 forced-colors:group-data-invalid:border-[Mark]'
   ],
@@ -45,7 +53,7 @@ const Select = <T extends object>({
       {...props}
       className={composeTailwindRenderProps(className, 'group flex w-full flex-col gap-y-1.5')}
     >
-      {label && <Label>{label}</Label>}
+      {label && <Label className='capitalize' >{label}</Label>}
       {children as React.ReactNode}
       {description && <Description>{description}</Description>}
       <FieldError>{errorMessage}</FieldError>
@@ -53,29 +61,29 @@ const Select = <T extends object>({
   );
 };
 
-interface ListProps<T extends object> extends ListBoxProps<T> {
+interface ListProps<T extends object> {
   items?: Iterable<T>;
   placement?: Placement;
   children: React.ReactNode | ((item: T) => React.ReactNode);
   className?: string;
 }
 
-const List = <T extends object>({ className, children, items, placement, ...props }: ListProps<T>) => {
+const List = <T extends object>({ className, children, items, placement }: ListProps<T>) => {
   return (
-    <Popover.Picker className={className} placement={placement}>
-      <ListBox.Picker aria-label="items" items={items} {...props}>
+    <Popover.Picker className={className} trigger="Select" placement={placement}>
+      <ListBox.Picker aria-label="items" items={items}>
         {children}
       </ListBox.Picker>
     </Popover.Picker>
   );
 };
 
-interface SelectTriggerProps extends React.ComponentProps<typeof Button> {
+interface TriggerProps extends React.ComponentProps<typeof Button> {
   prefix?: React.ReactNode;
   className?: string;
 }
 
-const SelectTrigger = ({ className, ...props }: SelectTriggerProps) => {
+const Trigger = ({ className, ...props }: TriggerProps) => {
   return (
     <Button
       className={composeRenderProps(className, (className, renderProps) =>
@@ -86,10 +94,13 @@ const SelectTrigger = ({ className, ...props }: SelectTriggerProps) => {
       )}
     >
       {props.prefix && <span className="-mr-1">{props.prefix}</span>}
-      <SelectValue className="*:data-[slot=icon]:-mx-0.5 *:data-[slot=avatar]:-mx-0.5 *:data-[slot=avatar]:*:-mx-0.5 grid flex-1 grid-cols-[auto_1fr] items-center text-base data-placeholder:text-muted-fg *:data-[slot=avatar]:*:mr-2 *:data-[slot=avatar]:mr-2 *:data-[slot=icon]:mr-2 sm:text-sm [&_[slot=description]]:hidden" />
+      <SelectValue
+        aria-placeholder="xxxxx"
+        className="flex-1 text-base data-placeholder:text-muted-fg sm:text-sm [&_[slot=description]]:hidden"
+      />
       <IconChevronLgDown
         aria-hidden
-        className="size-4 shrink-0 text-muted-fg duration-300 group-data-open:rotate-180 group-data-open:text-fg group-data-disabled:opacity-50 forced-colors:text-[ButtonText] forced-colors:group-data-disabled:text-[GrayText]"
+        className="duration-300 size-4 shrink-0 text-muted-fg group-data-open:rotate-180 group-data-open:text-fg group-data-disabled:opacity-50 forced-colors:text-[ButtonText] forced-colors:group-data-disabled:text-[GrayText]"
       />
     </Button>
   );
@@ -97,11 +108,8 @@ const SelectTrigger = ({ className, ...props }: SelectTriggerProps) => {
 
 Select.OptionDetails = DropdownItemDetails;
 Select.Option = DropdownItem;
-Select.Label = DropdownLabel;
-Select.Separator = DropdownSeparator;
 Select.Section = DropdownSection;
-Select.Trigger = SelectTrigger;
+Select.Trigger = Trigger;
 Select.List = List;
 
 export { Select };
-export type { SelectProps, SelectTriggerProps };

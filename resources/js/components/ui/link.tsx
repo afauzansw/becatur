@@ -1,16 +1,19 @@
+'use client';
+
 import { Link as LinkPrimitive, type LinkProps as LinkPrimitiveProps, composeRenderProps } from 'react-aria-components';
 import { tv } from 'tailwind-variants';
 
-import { focusButtonStyles } from './primitive';
-
 const linkStyles = tv({
-  extend: focusButtonStyles,
-  base: 'transition-[color,_opacity] data-disabled:cursor-default data-disabled:opacity-60 forced-colors:data-disabled:text-[GrayText]',
+  base: [
+    'relative data-focus-visible:outline-2 outline-offset-2 outline-0 data-focused:outline-hidden outline-primary transition-colors',
+    'forced-colors:outline-[Highlight] forced-colors:data-disabled:text-[GrayText] data-disabled:data-focus-visible:outline-0',
+    'disabled:cursor-default data-disabled:opacity-60'
+  ],
   variants: {
     intent: {
       unstyled: 'text-current',
-      primary: 'text-fg data-hovered:underline',
-      secondary: 'text-muted-fg data-hovered:text-secondary-fg'
+      primary: 'text-fg data-hovered:underline forced-colors:data-disabled:text-[GrayText]',
+      secondary: 'text-muted-fg data-hovered:text-secondary-fg forced-colors:data-disabled:text-[GrayText]'
     }
   },
   defaultVariants: {
@@ -20,15 +23,13 @@ const linkStyles = tv({
 
 interface LinkProps extends LinkPrimitiveProps {
   intent?: 'primary' | 'secondary' | 'unstyled';
-  ref?: React.RefObject<HTMLAnchorElement>;
 }
 
-const Link = ({ className, ref, ...props }: LinkProps) => {
+const Link = ({ className, ...props }: LinkProps) => {
   return (
     <LinkPrimitive
-      ref={ref}
       {...props}
-      className={composeRenderProps(className, (className, renderProps) =>
+      className={composeRenderProps(className, (className, ...renderProps) =>
         linkStyles({ ...renderProps, intent: props.intent, className })
       )}
     >
@@ -37,5 +38,4 @@ const Link = ({ className, ref, ...props }: LinkProps) => {
   );
 };
 
-export { Link };
-export type { LinkProps };
+export { Link, LinkPrimitive, type LinkPrimitiveProps, type LinkProps };
