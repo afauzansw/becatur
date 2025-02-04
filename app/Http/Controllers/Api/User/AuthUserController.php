@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\Auth;
+namespace App\Http\Controllers\Api\User;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRegisterRequest;
@@ -8,7 +8,7 @@ use App\Utils\WebResponse;
 use App\Contract\Auth\UserAuthContract;
 use App\Http\Requests\LoginRequest;
 
-class AuthApiController extends Controller
+class AuthUserController extends Controller
 {
     protected UserAuthContract $service;
 

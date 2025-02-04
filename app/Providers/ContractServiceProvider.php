@@ -3,10 +3,12 @@
 namespace App\Providers;
 
 use App\Contract\Auth\AdminAuthContract;
+use App\Contract\Auth\DriverAuthContract;
 use App\Contract\Auth\UserAuthContract;
 use App\Contract\AuthBaseContract;
 use App\Contract\BaseContract;
 use App\Service\Auth\AdminAuthService;
+use App\Service\Auth\DriverAuthService;
 use App\Service\Auth\UserAuthService;
 use App\Service\AuthBaseService;
 use App\Service\BaseService;
@@ -30,6 +32,7 @@ class ContractServiceProvider extends ServiceProvider
          * Auth Service Contract.
          */
         $this->app->bind(UserAuthContract::class, UserAuthService::class);
+        $this->app->bind(DriverAuthContract::class, DriverAuthService::class);
         $this->app->bind(AdminAuthContract::class, AdminAuthService::class);
     }
 

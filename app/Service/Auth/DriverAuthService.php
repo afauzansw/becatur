@@ -3,7 +3,7 @@
 namespace App\Service\Auth;
 
 use App\Contract\Auth\DriverAuthContract;
-use App\Models\User;
+use App\Models\Driver;
 use App\Service\AuthBaseService;
 use Illuminate\Database\Eloquent\Model;
 
@@ -20,7 +20,7 @@ class DriverAuthService extends AuthBaseService implements DriverAuthContract
      *
      * @param Model $model
      */
-    public function __construct(User $model)
+    public function __construct(Driver $model)
     {
         $this->model = $model;
     }
