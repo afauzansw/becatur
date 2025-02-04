@@ -7,6 +7,6 @@ Route::group(
     ['prefix' => 'user/profile', 'as' => 'user.profile.'],
     function () {
         Route::get('', [ProfileUserController::class, 'index'])->name('index');
-        Route::post('', [ProfileUserController::class, 'update'])->name('update');
+        Route::put('', [ProfileUserController::class, 'update'])->name('update');
     }
 );

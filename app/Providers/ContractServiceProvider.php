@@ -8,12 +8,14 @@ use App\Contract\Auth\UserAuthContract;
 use App\Contract\AuthBaseContract;
 use App\Contract\BaseContract;
 use App\Contract\Reservation\ReservationContract;
+use App\Contract\Setting\SettingContract;
 use App\Service\Auth\AdminAuthService;
 use App\Service\Auth\DriverAuthService;
 use App\Service\Auth\UserAuthService;
 use App\Service\AuthBaseService;
 use App\Service\BaseService;
 use App\Service\Reservation\ReservationService;
+use App\Service\Setting\SettingService;
 use Illuminate\Support\ServiceProvider;
 
 class ContractServiceProvider extends ServiceProvider
@@ -38,6 +40,7 @@ class ContractServiceProvider extends ServiceProvider
         $this->app->bind(AdminAuthContract::class, AdminAuthService::class);
 
         $this->app->bind(ReservationContract::class, ReservationService::class);
+        $this->app->bind(SettingContract::class, SettingService::class);
     }
 
     /**
