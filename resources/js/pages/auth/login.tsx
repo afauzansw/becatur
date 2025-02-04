@@ -1,7 +1,8 @@
-import { Head, useForm } from '@inertiajs/react';
-import { GuestLayout } from 'layouts';
+import { GuestLayout } from '@/layouts/guest-layout';
+import { Link, useForm } from '@inertiajs/react';
 import React, { useEffect } from 'react';
-import { Button, buttonStyles, Checkbox, Form, Link, TextField } from 'ui';
+import { Toaster } from 'sonner';
+import { Button, TextField } from 'ui';
 
 interface LoginProps {
   status: string;
@@ -9,7 +10,7 @@ interface LoginProps {
 }
 
 export default function Login(args: LoginProps) {
-  const { status, canResetPassword } = args;
+
   const { data, setData, post, processing, errors, reset } = useForm({
     email: '',
     password: '',
@@ -30,55 +31,63 @@ export default function Login(args: LoginProps) {
 
   return (
     <>
-      <Head title="Log in" />
-
-      {status && <div className="mb-4 text-sm font-medium text-green-600 dark:text-green-400">{status}</div>}
-
-      <Form validationErrors={errors} onSubmit={submit} className="space-y-6">
-        <TextField
-          label="Email"
-          type="email"
-          name="email"
-          value={data.email}
-          autoComplete="username"
-          autoFocus
-          onChange={(v) => setData('email', v)}
-          errorMessage={errors.email}
-          isRequired
-        />
-        <TextField
-          type="password"
-          name="password"
-          label="Password"
-          value={data.password}
-          autoComplete="current-password"
-          onChange={(v) => setData('password', v)}
-          errorMessage={errors.password}
-          isRequired
-        />
-
-        <div className="flex items-center justify-between">
-          <Checkbox name="remember" onChange={(v) => setData('remember', v as any)}>
-            Remember me
-          </Checkbox>
-          {canResetPassword && (
-            <Link href="/forgot-password" className="text-sm text-fg hover:underline">
-              Forgot your password?
-            </Link>
-          )}
+      <Toaster />
+      <div className='container relative grid h-svh flex-col items-center justify-center lg:max-w-none lg:grid-cols-2 lg:px-0'>
+        <div className='relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex'>
+          <img className='absolute inset-0 h-screen object-cover w-full' src="https://images.unsplash.com/photo-1670680342823-4fe90ffb0d2f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" />
+          <div className='absolute inset-0 h-screen w-full bg-zinc-900 opacity-50' />
+          <div className='relative z-20 flex items-center text-lg font-medium'>
+            Ojek Online
+          </div>
+          <div className='relative z-20 mt-auto'>
+            <blockquote className='space-y-2'>
+              <p className='text-lg'>
+                good delivering insight driven by data, kudos retha
+              </p>
+              <footer className='text-sm'></footer>
+            </blockquote>
+          </div>
         </div>
-
-        <div className="flex items-center justify-between">
-
-          <Button isDisabled={processing} type="submit">
-            Log in
-          </Button>
+        <div className='lg:p-8'>
+          <form onSubmit={submit} className='mx-auto flex w-full flex-col justify-center sm:max-w-md'>
+            <div className='flex flex-col space-y-2 text-left mb-4'>
+              <h1 className='text-2xl font-semibold tracking-tight'>Login</h1>
+              <p className='text-sm text-muted-foreground'>
+                Enter your email and password below <br />
+                to log into your account
+              </p>
+            </div>
+            <TextField
+              label="Email"
+              type="email"
+              name="email"
+              value={data.email}
+              autoComplete="one-time-code"
+              onChange={(v) => setData("email", v)}
+              errorMessage={errors.email}
+              isRequired
+              className='mb-2'
+            />
+            <TextField
+              isRevealable
+              label="Password"
+              type="password"
+              name="password"
+              value={data.password}
+              autoComplete="one-time-code"
+              onChange={(v) => setData("password", v)}
+              errorMessage={errors.password}
+              isRequired
+              className='mb-2'
+            />
+            <Button isDisabled={processing} className="mt-3" type="submit">
+              Login
+            </Button>
+          </form>
         </div>
-      </Form>
+      </div>
     </>
   );
 }
 
-Login.layout = (page: React.ReactNode) => {
-  return <GuestLayout children={page} />;
-};
+Login.layout = (page: React.ReactNode) => <GuestLayout children={page} />;
