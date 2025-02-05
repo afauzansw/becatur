@@ -42,7 +42,7 @@ class ReservationWebController extends Controller
 
     public function acceptPayment($id)
     {
-        $data = $this->service->update($id, ['status' => Reservation::status['paid_success']]);
+        $data = $this->service->update($id, ['status' => Reservation::status['PAID_SUCCESS']]);
         return WebResponse::inertia($data, 'web.backoffice.reservation.index');
     }
 }

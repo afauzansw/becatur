@@ -34,7 +34,7 @@ class ReservationDriverController extends Controller
 
     public function accept(string $id)
     {
-        $payloads['status'] = Reservation::status['accept_by_driver'];
+        $payloads['status'] = Reservation::status['ACCEPT_BY_DRIVER'];
 
         $result = $this->service->update($id, $payloads);
         return WebResponse::json($result, 'Successfully accept reservation.');
@@ -42,7 +42,7 @@ class ReservationDriverController extends Controller
 
     public function reject(string $id)
     {
-        $payloads['status'] = Reservation::status['reject_by_driver'];
+        $payloads['status'] = Reservation::status['REJECT_BY_DRIVER'];
 
         $result = $this->service->update($id, $payloads);
         return WebResponse::json($result, 'Successfully reject reservation.');

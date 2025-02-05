@@ -45,7 +45,7 @@ class ReservationUserController extends Controller
     public function cancel(string $id, CancelReservationRequest $request)
     {
         $payloads = $request->validated();
-        $payloads['status'] = Reservation::status['cancel_by_customer'];
+        $payloads['status'] = Reservation::status['CANCEL_BY_CUSTOMER'];
 
         $result = $this->service->update($id, $payloads);
         return WebResponse::json($result, 'Successfully cancel reservation.');
@@ -53,7 +53,7 @@ class ReservationUserController extends Controller
 
     public function payment(string $id)
     {
-        $payloads['status'] = Reservation::status['paid_by_customer'];
+        $payloads['status'] = Reservation::status['PAID_BY_CUSTOMER'];
 
         $result = $this->service->update($id, $payloads);
         return WebResponse::json($result, 'Successfully paid reservation.');

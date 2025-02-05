@@ -12,12 +12,14 @@ class Reservation extends Model
     protected $guarded = [];
 
     public const status = [
-        'created' => 'CREATED',
-        'cancel_by_customer' => 'CANCEL_BY_CUSTOMER',
-        'accept_by_driver' => 'ACCEPT_BY_DRIVER',
-        'reject_by_driver' => 'REJECT_BY_DRIVER',
-        'paid_by_customer' => 'PAID_BY_CUSTOMER',
-        'paid_success' => 'PAID_SUCCESS',
+        'CREATED' => 'CREATED',
+        'CANCEL_BY_CUSTOMER' => 'CANCEL_BY_CUSTOMER',
+        'ACCEPT_BY_DRIVER' => 'ACCEPT_BY_DRIVER',
+        'REJECT_BY_DRIVER' => 'REJECT_BY_DRIVER',
+        'PAID_BY_CUSTOMER' => 'PAID_BY_CUSTOMER',
+        'PAID_SUCCESS' => 'PAID_SUCCESS',
+        'PICKUP_BY_DRIVER' => 'PICKUP_BY_DRIVER',
+        'SUCCESS' => 'SUCCESS',
     ];
 
     public function user()

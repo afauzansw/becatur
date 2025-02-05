@@ -4,6 +4,7 @@ namespace App\Service\Driver;
 
 use App\Contract\Driver\DriverContract;
 use App\Models\Driver;
+use App\Models\Reservation;
 use App\Service\BaseService;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
@@ -38,6 +39,19 @@ class DriverService extends BaseService implements DriverContract
             return $model->first();
         } catch (Exception $e) {
             DB::rollBack();
+            return $e;
+        }
+    }
+
+    public function getAvailable()
+    {
+        try {
+            return $this->model::query()
+                ->where('is_online', true)
+                ->whereRelation('reservation', 'status', '!=', Reservation::status['SUCCESS'])
+                ->get()
+                ->random();
+        } catch (Exception $e) {
             return $e;
         }
     }
