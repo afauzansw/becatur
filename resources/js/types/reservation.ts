@@ -13,6 +13,7 @@ export type Reservation = {
     end_longitude: number;
     total_price: string;
     status: string;
+    payment_status: string;
     cancelation_reason?: string | null;
     created_at?: string;
     updated_at?: string;

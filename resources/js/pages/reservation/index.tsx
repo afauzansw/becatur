@@ -58,6 +58,12 @@ export default function ReservationIndex() {
             sortable: true
         },
         {
+            id: 'payment_status',
+            header: 'Payment Status',
+            cell: (item) => item.payment_status,
+            sortable: true
+        },
+        {
             id: 'total_price',
             header: 'Total Price',
             cell: (item) => "Rp " + number_format(item.total_price),
