@@ -7,6 +7,7 @@ Route::group(
     ['prefix' => 'driver/profile', 'as' => 'driver.profile.'],
     function () {
         Route::get('', [ProfileDriverController::class, 'index'])->name('index');
-        Route::post('', [ProfileDriverController::class, 'update'])->name('update');
+        Route::put('', [ProfileDriverController::class, 'update'])->name('update');
+        Route::put('status', [ProfileDriverController::class, 'changeOnlineStatus'])->name('status');
     }
 );
