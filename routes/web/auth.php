@@ -9,6 +9,6 @@ Route::group(
     function () {
         Route::get('login', [AuthWebController::class, 'login'])->name('login');
         Route::post('attempt', [AuthWebController::class, 'attempt'])->name('attempt');
-        Route::post('logout', [AuthWebController::class, 'logout'])->name('logout');
+        Route::post('logout', [AuthWebController::class, 'logout'])->name('logout')->middleware('auth.admin');
     }
 );

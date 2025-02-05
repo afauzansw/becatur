@@ -11,7 +11,6 @@ class BackofficeWebController extends Controller
 {
     public function index()
     {
-        if (!Auth::guard('admin')->check()) return redirect(route('web.auth.login'));
         return Inertia::render('home');
     }
 }

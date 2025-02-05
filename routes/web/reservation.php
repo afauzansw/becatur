@@ -4,7 +4,7 @@ use App\Http\Controllers\Web\ReservationWebController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(
-    ['prefix' => 'backoffice/reservation', 'as' => 'backoffice.reservation.'],
+    ['prefix' => 'backoffice/reservation', 'as' => 'backoffice.reservation.', 'middleware' => 'auth.admin'],
     function () {
         Route::get('', [ReservationWebController::class, 'index'])->name('index');
         Route::get('fetch', [ReservationWebController::class, 'fetch'])->name('fetch');

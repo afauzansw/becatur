@@ -89,7 +89,7 @@ export default function Login(args: LoginProps) {
               isRequired
               className='mb-2'
             />
-            <Button isDisabled={processing} className="mt-3" type="submit">
+            <Button intent='custom' isDisabled={processing} className="mt-3" type="submit">
               Login
             </Button>
           </form>
