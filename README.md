@@ -1,125 +1,92 @@
-### tl;dr
+# Becatur
 
-```bash
-composer create-project justd/laravel your-project-name
+![image](https://github.com/user-attachments/assets/4b1dffdf-4cda-4229-b037-af87b7cdec91)
+
+This is a Laravel Inertia project that utilizes Bun as the package manager and runtime for frontend dependencies.
+
+## Requirements
+
+- PHP >= 8.1
+- Composer
+- Bun (https://bun.sh/)
+- Node.js (optional, if you need compatibility with Node-based tools)
+- Database (MySQL, PostgreSQL, or SQLite, depending on your configuration)
+
+## Installation
+
+1. Clone the repository:
+   ```sh
+   git clone https://github.com/your-username/your-project.git
+   cd your-project
+   ```
+
+2. Install backend dependencies:
+   ```sh
+   composer install
+   ```
+
+3. Install frontend dependencies using Bun:
+   ```sh
+   bun install
+   ```
+
+4. Copy the environment file and configure your settings:
+   ```sh
+   cp .env.example .env
+   ```
+   Modify `.env` as needed, including database credentials.
+
+5. Generate the application key:
+   ```sh
+   php artisan key:generate
+   ```
+
+6. Run migrations and seed the database (if applicable):
+   ```sh
+   php artisan migrate --seed
+   ```
+
+## Running the Project
+
+### Backend (Laravel)
+Start the Laravel development server:
+```sh
+php artisan serve
 ```
 
-## Using NPM
-
-when you're using npm, you have to include `--legacy-peer-deps` flag.
-
-```bash
-npm i --legacy-peer-deps
-composer run dev
-```
-
-## Using Bun
-
-```bash
-bun i && composer run dev
-```
-
-You absolutely need to run the `bun run dev`, because the route is generated and watching while it's in dev.
-
-### Laravel Inertia React w/ Typescript
-
-By default, if we use package like Laravel breeze, it'll use regular javascript react by default. But this project is
-for you who want to use inertia.js with typescript boilerplate.
-
-This project has come with some features like:
-
-- Authentication
-- User Profile
-- User Password
-- User Delete
-- User Resources (--only=[index, show, edit, update, destroy])
-- Pagination
-
-### Quick Login
-
-This project has a feature to login quickly. You can use this feature by adding `/dev/login/{user_id}` to the url. For
-example: `http://localhost:8000/dev/login/1`. And then you can login as user with id `1`. But this feature only works in
-development mode with `APP_ENV=local` in `.env` file. Make sure you have a user with id `1` in your database.
-
-### The default branch has been renamed!
-
-**9.x** is now named **laravel-9.x**
-
-If you have a local clone, you can update it by running the following commands.
-
-```bash
-git branch -m 9.x laravel-9.x
-git fetch origin
-git branch -u origin/laravel-9.x laravel-9.x
-git remote set-head origin -a
-```
-
-### About Laravel
-
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and
-creative experience to be truly fulfilling.
-
-### About Inertia.js
-
-Inertia.js lets you quickly build modern single-page React, Vue and Svelte apps using classic server-side routing and
-controllers.
-
-### About Typescript
-
-Typescript is a strict syntactical superset of JavaScript and adds optional static typing to the language.
-
-### Available scripts
-
-Feel free to use someting like [pnpm](https://pnpm.io/) or [yarn](https://yarnpkg.com/). It just node package manager I
-have, so make yours.
-
-```bash
-# Format with prettier
-bun run format
-
-# Start development
+### Frontend (Vite + Bun)
+Run the Vite development server:
+```sh
 bun run dev
-
-# Build the app
-bun run build
-
-# Testing for SSR
-bun run preview
 ```
 
-### Update profile information
+## Building for Production
 
-Of course it is not just about authentication, but also about updating user profile information, password, and deleting
-account.
+For production builds, run:
+```sh
+bun run build
+```
 
-### Dashboard Layout
+And make sure to optimize Laravel:
+```sh
+php artisan optimize
+```
 
-This project has 3 layout:
+## Additional Commands
 
-1. Guest Layout
-2. App Layout (Default)
-3. User Layout
+- To clear caches:
+  ```sh
+  php artisan cache:clear
+  php artisan config:clear
+  php artisan route:clear
+  php artisan view:clear
+  ```
 
-User layout will make a layout side by side, it has a sidebar. So this is will be useful when you need an admin panel or
-something like that.
+- To run tests:
+  ```sh
+  php artisan test
+  ```
 
-If you like making new features, feel free to make a [pull request](https://github.com/irsyadadl/inertia.ts/pulls). I'll
-be happy to review it.
+## License
+This project is open-source and available under the [MIT License](LICENSE).
 
-### Learn More
-
-Everything you need to understand is clearly can be found
-in: [UI / UX with Laravel and React](https://parsinta.com/series/ui-laravel-dan-react-nqp6j)
-
-### Thanks to
-
-- [Laravel](https://github.com/laravel/framework)
-- [Inertia](https://github.com/inertiajs/inertia) with [React](https://github.com/facebook/react)
-  and [Typescript](https://github.com/microsoft/TypeScript)
-- [Vite](https://vitejs.dev/) with [Vite plugin](https://github.com/laravel/vite-plugin) and friends
-- [Tailwind CSS](https://github.com/tailwindlabs/tailwindcss) and friends
-- [Paranoid](https://paranoid.irsyad.co)
-- [getjustd.com](https://getjustd.com/)
-- [parsinta.com](https://parsinta.com/)
-- [irsyad.co](https://irsyad.co/)
-- [karteil.com](https://karteil.com/)
