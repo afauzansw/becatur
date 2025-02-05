@@ -22,6 +22,11 @@ class Reservation extends Model
         'SUCCESS' => 'SUCCESS',
     ];
 
+    public const paymentStatus = [
+        'UNPAID' => 'UNPAID',
+        'PAID' => 'PAID',
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);

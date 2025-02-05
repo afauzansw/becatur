@@ -28,6 +28,7 @@ return new class extends Migration {
             $table->decimal('end_longitude', 11, 8);
             $table->integer('total_price')->default(0); // tambahnkan 3 digit dibelakang coma untukidentifikasi
             $table->enum('status', [Reservation::status])->default(Reservation::status['CREATED']);
+            $table->enum('payment_status', [Reservation::paymentStatus])->default(Reservation::paymentStatus['UNPAID']);
             $table->string('cancelation_reason')->nullable();
             $table->timestamps();
         });
