@@ -16,7 +16,7 @@ return new class extends Migration {
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(User::class);
-            $table->foreignIdFor(Driver::class);
+            $table->foreignIdFor(Driver::class)->nullable();
             $table->string('start_address');
             $table->decimal('start_latitude', 10, 8);
             $table->decimal('start_longitude', 11, 8);
@@ -26,7 +26,7 @@ return new class extends Migration {
             $table->string('end_address');
             $table->decimal('end_latitude', 10, 8);
             $table->decimal('end_longitude', 11, 8);
-            $table->integer('total_price')->default(0);
+            $table->integer('total_price')->default(0); // tambahnkan 3 digit dibelakang coma untukidentifikasi
             $table->enum('status', [Reservation::status])->default(Reservation::status['created']);
             $table->string('cancelation_reason')->nullable();
             $table->timestamps();

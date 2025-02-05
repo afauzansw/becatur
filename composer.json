@@ -10,7 +10,9 @@
   "license": "MIT",
   "require": {
     "php": "^8.2",
+    "google/cloud-firestore": "^1.48",
     "inertiajs/inertia-laravel": "^2.0",
+    "kreait/firebase-php": "^7.10",
     "laravel/framework": "^11.9",
     "laravel/sanctum": "^4.0",
     "laravel/tinker": "^2.9",

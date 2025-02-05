@@ -6,10 +6,12 @@ import {
     SidebarContent,
     SidebarDisclosure,
     SidebarDisclosureGroup,
+    SidebarDisclosurePanel,
     SidebarDisclosureTrigger,
     SidebarFooter,
     SidebarHeader,
     SidebarInset,
+    SidebarItem,
     SidebarLabel,
     SidebarNav,
     SidebarProvider,
@@ -18,12 +20,18 @@ import {
 import { PagePropsData } from "@/types";
 import { Link, useForm, usePage } from "@inertiajs/react";
 import {
+    IconBook,
     IconCar,
     IconChartAnalytics,
     IconChevronLgDown,
     IconDashboard,
+    IconDeviceDesktop,
+    IconDevicePhone,
     IconLogout,
+    IconMoneybag,
     IconPerson,
+    IconPersonPasskey,
+    IconSettings,
 } from "justd-icons";
 import { PropsWithChildren } from "react";
 import { toast, Toaster } from "sonner";
@@ -51,32 +59,50 @@ export const AppLayout = (props: PropsWithChildren) => {
 
     const sections = [
         {
-            label: "Backoffice",
-            icon: IconDashboard,
-            href: route('web.backoffice.index')
+            icon: IconSettings,
+            label: "Operational",
+            items: [
+                {
+                    label: "Reservation Payment",
+                    icon: IconMoneybag,
+                    href: route('web.backoffice.reservation.index')
+                },
+            ]
         },
         {
-            label: "User",
-            icon: IconPerson,
-            href: route('web.backoffice.index')
+            icon: IconBook,
+            label: "Master Data",
+            items: [
+                {
+                    label: "Admin",
+                    icon: IconPersonPasskey,
+                    href: route('web.backoffice.index')
+                },
+            ]
         },
         {
-            label: "Driver",
-            icon: IconCar,
-            href: route('web.backoffice.index')
-        },
+            icon: IconSettings,
+            label: "Settings",
+            items: [
+                {
+                    label: "Application",
+                    icon: IconDeviceDesktop,
+                    href: route('web.backoffice.index')
+                },
+            ]
+        }
     ]
 
     return (
         <SidebarProvider>
-            <Sidebar intent="default" collapsible="dock" className="bg-white" >
+            <Sidebar intent="default" collapsible="dock" className="bg-[#016243]" >
                 <SidebarHeader>
                     <Link
-                        className="flex items-center gap-x-2 group-data-[collapsible=dock]:size-10 group-data-[collapsible=dock]:justify-center"
+                        className="flex items-center gap-x-2 group-data-[collapsible=dock]:size-10 group-data-[collapsible=dock]:justify-center text-white"
                         href={route('web.backoffice.index')}
                     >
-                        <IconCar className="text-emerald-800 size-4.5" />
-                        <SidebarLabel className="font-medium">Console</SidebarLabel>
+                        <IconCar className="size-4.5" />
+                        <SidebarLabel className="font-medium">Becatur</SidebarLabel>
                     </Link>
                 </SidebarHeader>
 
@@ -84,10 +110,22 @@ export const AppLayout = (props: PropsWithChildren) => {
                     {sections.map((section, sectionIndex) => (
                         <SidebarDisclosureGroup key={sectionIndex}>
                             <SidebarDisclosure id={sectionIndex + 1}>
-                                <SidebarDisclosureTrigger>
-                                    <section.icon className="text-black size-4" />
-                                    <SidebarLabel className="font-medium text-black" > {section.label}</SidebarLabel>
+                                <SidebarDisclosureTrigger className="text-white hover:text-[#016243]">
+                                    <section.icon className="size-4 text-white hover:text-[#016243]" />
+                                    <SidebarLabel className="font-medium text-white hover:text-[#016243]" > {section.label}</SidebarLabel>
                                 </SidebarDisclosureTrigger>
+                                <SidebarDisclosurePanel>
+                                    {section.items.map((item, itemIndex) => (
+                                        <SidebarItem className="hover:text-[#016243]" key={itemIndex} href={item.href}>
+                                            {({ isHovered }) => (
+                                                <>
+                                                    <item.icon className="text-white hover:text-[#016243] size-4" />
+                                                    <SidebarLabel className="text-white hover:text-[#016243]" >{item.label}</SidebarLabel>
+                                                </>
+                                            )}
+                                        </SidebarItem>
+                                    ))}
+                                </SidebarDisclosurePanel>
                             </SidebarDisclosure>
                         </SidebarDisclosureGroup>
                     ))}

@@ -35,6 +35,7 @@
     "@tailwindcss/vite": "^4.0.0-beta.9",
     "@types/node": "^22.10.7",
     "clsx": "^2.1.1",
+    "date-fns": "^4.1.0",
     "input-otp": "^1.4.2",
     "install": "^0.13.0",
     "justd-icons": "^1.10.21",

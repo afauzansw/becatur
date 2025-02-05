@@ -16,6 +16,17 @@ class Reservation extends Model
         'cancel_by_customer' => 'CANCEL_BY_CUSTOMER',
         'accept_by_driver' => 'ACCEPT_BY_DRIVER',
         'reject_by_driver' => 'REJECT_BY_DRIVER',
-        'paid' => 'PAID',
+        'paid_by_customer' => 'PAID_BY_CUSTOMER',
+        'paid_success' => 'PAID_SUCCESS',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function driver()
+    {
+        return $this->belongsTo(Driver::class);
+    }
 }

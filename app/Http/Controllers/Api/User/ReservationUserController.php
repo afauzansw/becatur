@@ -53,7 +53,7 @@ class ReservationUserController extends Controller
 
     public function payment(string $id)
     {
-        $payloads['status'] = Reservation::status['paid'];
+        $payloads['status'] = Reservation::status['paid_by_customer'];
 
         $result = $this->service->update($id, $payloads);
         return WebResponse::json($result, 'Successfully paid reservation.');
