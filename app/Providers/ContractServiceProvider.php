@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Contract\Admin\AdminContract;
 use App\Contract\Auth\AdminAuthContract;
 use App\Contract\Auth\DriverAuthContract;
 use App\Contract\Auth\UserAuthContract;
@@ -10,6 +11,7 @@ use App\Contract\BaseContract;
 use App\Contract\Driver\DriverContract;
 use App\Contract\Reservation\ReservationContract;
 use App\Contract\Setting\SettingContract;
+use App\Service\Admin\AdminService;
 use App\Service\Auth\AdminAuthService;
 use App\Service\Auth\DriverAuthService;
 use App\Service\Auth\UserAuthService;
@@ -41,6 +43,7 @@ class ContractServiceProvider extends ServiceProvider
         $this->app->bind(DriverAuthContract::class, DriverAuthService::class);
         $this->app->bind(AdminAuthContract::class, AdminAuthService::class);
 
+        $this->app->bind(AdminContract::class, AdminService::class);
         $this->app->bind(DriverContract::class, DriverService::class);
         $this->app->bind(ReservationContract::class, ReservationService::class);
         $this->app->bind(SettingContract::class, SettingService::class);

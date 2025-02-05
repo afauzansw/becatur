@@ -23,7 +23,7 @@ class ReservationWebController extends Controller
     {
         $relations = ['user', 'driver'];
 
-        $data = $this->service->all([], ['true'], true, $relations);
+        $data = $this->service->all([], ['status', 'payment_status'], true, $relations);
         return response()->json($data);
     }
 

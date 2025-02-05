@@ -76,7 +76,7 @@ export const AppLayout = (props: PropsWithChildren) => {
                 {
                     label: "Admin",
                     icon: IconPersonPasskey,
-                    href: route('web.backoffice.index')
+                    href: route('web.backoffice.admin.index')
                 },
             ]
         },
