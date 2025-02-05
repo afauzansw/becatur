@@ -33,6 +33,13 @@ const buttonStyles = tv({
       danger: [
         'text-danger-fg outline-danger [--button-bg:var(--color-danger)] [--button-border:var(--color-danger)] [--button-hover-overlay:var(--color-danger-fg)]/10',
         '[--button-icon:var(--color-white)]/60 data-pressed:[--button-icon:var(--color-danger-fg)]/80 data-hovered:[--button-icon:var(--color-danger-fg)]/80'
+      ],
+      custom: [
+        'text-white',
+        '[--button-bg:#016243]',
+        '[--button-border:#016243]',
+        '[--button-hover-overlay:#014d32]',
+        '[--button-icon:#ffffff]/60 data-pressed:[--button-icon:#ffffff]/80 data-hovered:[--button-icon:#ffffff]/80'
       ]
     },
     appearance: {
@@ -84,7 +91,7 @@ const buttonStyles = tv({
 });
 
 interface ButtonProps extends ButtonPrimitiveProps {
-  intent?: 'primary' | 'secondary' | 'danger' | 'warning';
+  intent?: 'primary' | 'secondary' | 'danger' | 'warning' | 'custom';
   size?: 'medium' | 'large' | 'square-petite' | 'extra-small' | 'small';
   shape?: 'square' | 'circle';
   appearance?: 'solid' | 'outline' | 'plain';

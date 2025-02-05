@@ -14,14 +14,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        Admin::create([
-            'name' => 'Admin',
-            'email' => 'admin@gmail.com',
-            'password' => Hash::make('password')
-        ]);
-
         $this->call([
             SettingSeeder::class,
+            AdminSeeder::class,
+            DriverSeeder::class,
+            UserSeeder::class
         ]);
     }
 }

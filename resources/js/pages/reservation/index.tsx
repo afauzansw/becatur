@@ -48,7 +48,7 @@ export default function ReservationIndex() {
         {
             id: 'driver_name',
             header: 'Driver Name',
-            cell: (item) => item.driver.name,
+            cell: (item) => item.driver?.name,
             sortable: false
         },
         {
@@ -109,7 +109,7 @@ export default function ReservationIndex() {
                     {
                         id && <form onSubmit={onApprove} >
                             <input type="hidden" name="_method" value="DELETE" />
-                            <Button intent="primary" type="submit">
+                            <Button intent="custom" type="submit">
                                 <IconCircleCheck />
                                 Approve Payment
                             </Button>
