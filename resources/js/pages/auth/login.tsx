@@ -1,7 +1,7 @@
 import { GuestLayout } from '@/layouts/guest-layout';
 import { Link, useForm } from '@inertiajs/react';
 import React, { useEffect } from 'react';
-import { Toaster } from 'sonner';
+import { toast, Toaster } from 'sonner';
 import { Button, TextField } from 'ui';
 
 interface LoginProps {
@@ -26,7 +26,16 @@ export default function Login(args: LoginProps) {
   const submit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
-    post(route('web.auth.attempt'));
+    post(route('web.auth.attempt'), {
+        onSuccess: () => {
+            toast.success('Login successfully');
+        },
+        onError: (error) => {
+            toast('Whoopsss....', {
+                description: JSON.stringify(error)
+            });
+        }
+    });
   };
 
   return (
