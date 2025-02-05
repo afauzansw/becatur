@@ -1,4 +1,3 @@
-# Becatur
 
 ![image](https://github.com/user-attachments/assets/4b1dffdf-4cda-4229-b037-af87b7cdec91)
 
