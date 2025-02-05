@@ -16,8 +16,8 @@ This is a Laravel Inertia project that utilizes Bun as the package manager and r
 
 1. Clone the repository:
    ```sh
-   git clone https://github.com/your-username/your-project.git
-   cd your-project
+   git clone https://github.com/afauzansw/becatur.git
+   cd becatur
    ```
 
 2. Install backend dependencies:
