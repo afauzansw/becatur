@@ -2,6 +2,7 @@
 
 namespace App\Service\Reservation;
 
+use App\Contract\Driver\DriverContract;
 use App\Contract\Reservation\ReservationContract;
 use App\Models\Reservation;
 use App\Service\BaseService;
@@ -18,10 +19,12 @@ class ReservationService extends BaseService implements ReservationContract
     protected string|null $guardForeignKey = null;
     protected array $fileKeys = [];
     protected Model $model;
+    protected DriverContract $driver;
 
-    public function __construct(Reservation $model)
+    public function __construct(Reservation $model, DriverContract $driver)
     {
         $this->model = $model;
+        $this->driver = $driver;
         // $this->firestore = $firestore;
     }
 
@@ -42,6 +45,29 @@ class ReservationService extends BaseService implements ReservationContract
             //         'website' => 'https://tes.tes.com',
             //     ]);
 
+
+            DB::commit();
+
+            return $model->fresh();
+        } catch (Exception $e) {
+            DB::rollBack();
+            return $e;
+        }
+    }
+
+    public function approvePayment($id)
+    {
+        try {
+
+            $driverId = $this->driver->getAvailable();
+
+            DB::beginTransaction();
+
+            $model = $this->model->find($id);
+            $model->update([
+                'driver_id' => $driverId,
+                'status' => Reservation::status['PAID_SUCCESS'],
+            ]);
 
             DB::commit();
 

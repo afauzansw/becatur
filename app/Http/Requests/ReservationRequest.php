@@ -12,7 +12,7 @@ class ReservationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'driver_id' => 'required|exists:drivers,id',
+            // 'driver_id' => 'required|exists:drivers,id',
             'start_address' => 'required|string',
             'start_latitude' => 'required|numeric|between:-90,90',
             'start_longitude' => 'required|numeric|between:-180,180',
