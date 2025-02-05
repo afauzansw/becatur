@@ -87,7 +87,7 @@ export const AppLayout = (props: PropsWithChildren) => {
                 {
                     label: "Application",
                     icon: IconDeviceDesktop,
-                    href: route('web.backoffice.index')
+                    href: route('web.backoffice.setting.index')
                 },
             ]
         }
