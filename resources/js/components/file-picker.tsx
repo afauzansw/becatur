@@ -8,13 +8,13 @@ type FilePickerProps = {
     name: string;
     isRequired?: boolean;
     onChange: (files: FileList | null) => void;
-    ref: React.RefObject<HTMLInputElement>;
+    ref?: React.RefObject<HTMLInputElement>;
     prefix?: React.ReactNode;
     suffix?: React.ReactNode;
     accept?: string;
     multiple?: boolean;
     className?: string;
-    value?: string;
+    value?: string | null;
 };
 
 export const FilePicker = ({
