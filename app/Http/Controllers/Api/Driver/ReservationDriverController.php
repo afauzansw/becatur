@@ -21,7 +21,6 @@ class ReservationDriverController extends Controller
     public function index()
     {
         $condition = ['driver_id', '=', Auth::guard('driver')->id()];
-
         $result = $this->service->getWithCondition($condition, [], []);
         return WebResponse::json($result, 'Successfully get all driver reservation.');
     }
