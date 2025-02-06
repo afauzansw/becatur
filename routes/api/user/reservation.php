@@ -4,7 +4,7 @@ use App\Http\Controllers\Api\User\ReservationUserController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(
-    ['prefix' => 'user/reservation', 'as' => 'user.reservation.'],
+    ['prefix' => 'user/reservation', 'as' => 'user.reservation.', 'middleware' => 'auth.user'],
     function () {
         Route::get('', [ReservationUserController::class, 'index'])->name('index');
         Route::post('', [ReservationUserController::class, 'store'])->name('store');

@@ -8,7 +8,7 @@ Route::group(
     function () {
         Route::post('login', [AuthUserController::class, 'attempt'])->name('login');
         Route::post('register', [AuthUserController::class, 'store'])->name('register');
-        Route::post('logout', [AuthUserController::class, 'logout'])->name('logout');
-        Route::post('refresh', [AuthUserController::class, 'refreshToken'])->name('refresh');
+        Route::post('logout', [AuthUserController::class, 'logout'])->name('logout')->middleware('auth.user');
+        Route::post('refresh', [AuthUserController::class, 'refreshToken'])->name('refresh')->middleware('auth.user');
     }
 );
