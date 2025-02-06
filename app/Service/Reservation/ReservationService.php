@@ -3,13 +3,13 @@
 namespace App\Service\Reservation;
 
 use App\Contract\Driver\DriverContract;
+use App\Contract\FireStoreContract;
 use App\Contract\Reservation\ReservationContract;
 use App\Models\Reservation;
 use App\Service\BaseService;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
-use Kreait\Firebase\Contract\Firestore;
 
 
 class ReservationService extends BaseService implements ReservationContract
@@ -20,12 +20,13 @@ class ReservationService extends BaseService implements ReservationContract
     protected array $fileKeys = [];
     protected Model $model;
     protected DriverContract $driver;
+    protected FireStoreContract $firestore;
 
-    public function __construct(Reservation $model, DriverContract $driver)
+    public function __construct(Reservation $model, DriverContract $driver, FireStoreContract $firestore)
     {
         $this->model = $model;
         $this->driver = $driver;
-        // $this->firestore = $firestore;
+        $this->firestore = $firestore;
     }
 
     public function create($payloads)
@@ -38,13 +39,7 @@ class ReservationService extends BaseService implements ReservationContract
             DB::beginTransaction();
             $model = $this->model->create($payloads);
 
-            // $this->database->getReference('config/website')
-            //     ->set([
-            //         'name' => 'My Application',
-            //         'emails' => 'sales@example.com',
-            //         'website' => 'https://tes.tes.com',
-            //     ]);
-
+            $this->firestore->add('reservations', $payloads);
 
             DB::commit();
 
@@ -64,7 +59,7 @@ class ReservationService extends BaseService implements ReservationContract
             DB::beginTransaction();
 
             $model = $this->model->find($id);
-            
+
             $model->update([
                 'driver_id' => $driverId,
                 'payment_status' => Reservation::paymentStatus['PAID'],

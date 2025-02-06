@@ -13,11 +13,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        // $this->app->singleton(FirestoreContract::class, function ($app) {
-        //     return (new Factory)
-        //         ->withServiceAccount(config('firebase.credentials')) // Pastikan ini benar
-        //         ->createFirestore();
-        // });
+        $this->app->singleton(FirestoreContract::class, function ($app) {
+            return (new Factory)
+                ->withServiceAccount(config('firebase.credentials')) // Pastikan ini benar
+                ->createFirestore();
+        });
     }
 
     /**
