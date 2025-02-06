@@ -4,7 +4,7 @@ use App\Http\Controllers\Api\Driver\ProfileDriverController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(
-    ['prefix' => 'driver/profile', 'as' => 'driver.profile.'],
+    ['prefix' => 'driver/profile', 'as' => 'driver.profile.', 'middleware' => 'auth.driver'],
     function () {
         Route::get('', [ProfileDriverController::class, 'index'])->name('index');
         Route::put('', [ProfileDriverController::class, 'update'])->name('update');

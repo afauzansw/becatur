@@ -4,7 +4,7 @@ use App\Http\Controllers\Api\Driver\ReservationDriverController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(
-    ['prefix' => 'driver/reservation', 'as' => 'driver.reservation.'],
+    ['prefix' => 'driver/reservation', 'as' => 'driver.reservation.', 'middleware' => 'auth.driver'],
     function () {
         Route::get('', [ReservationDriverController::class, 'index'])->name('index');
         Route::get('{id}', [ReservationDriverController::class, 'show'])->name('show');

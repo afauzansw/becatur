@@ -8,7 +8,7 @@ Route::group(
     function () {
         Route::post('login', [AuthDriverController::class, 'attempt'])->name('login');
         Route::post('register', [AuthDriverController::class, 'store'])->name('register');
-        Route::post('logout', [AuthDriverController::class, 'logout'])->name('logout');
-        Route::post('refresh', [AuthDriverController::class, 'refreshToken'])->name('refresh');
+        Route::post('logout', [AuthDriverController::class, 'logout'])->name('logout')->middleware('auth.driver');
+        Route::post('refresh', [AuthDriverController::class, 'refreshToken'])->name('refresh')->middleware('auth.driver');
     }
 );
