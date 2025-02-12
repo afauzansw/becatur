@@ -14,10 +14,10 @@ export default defineConfig({
       refresh: true
     }),
     react(),
-    watch({
-      pattern: 'app/{Data,Enums}/**/*.php',
-      command: 'php artisan typescript:transform'
-    }),
+    // watch({
+    //   pattern: 'app/{Data,Enums}/**/*.php',
+    // //   command: 'php artisan typescript:transform'
+    // }),
     watch({
       pattern: 'routes/web.php',
       command: 'php artisan ziggy:generate'

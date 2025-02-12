@@ -7,8 +7,8 @@ const Sidebar = () => {
             <div className="flex items-center space-x-2 mb-6">
                 <img src="/logo.png" alt="Logo" className="h-10 w-auto mx-auto mb-4" />
             </div>
-            <nav className="flex-1">
-                <ul className="space-y-4">
+            <nav className="mt-4 flex-1">
+                <ul className="space-y-3">
                     <SidebarItem icon={Home} label="Dashboard" href={route('web.backoffice.index')} />
                     <SidebarItem icon={Bike} label="Armada Becak" href="#" />
                     <SidebarItem icon={Calendar} label="Reservasi" href="#" />
@@ -43,7 +43,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({ icon: Icon, label, href }) =>
         <li>
             <a href={href} className="flex items-center space-x-3 p-2 rounded-lg hover:bg-green-800 cursor-pointer">
                 <Icon size={20} />
-                <span>{label}</span>
+                <span className="text-nowrap">{label}</span>
             </a>
         </li>
     );

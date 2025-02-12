@@ -95,12 +95,12 @@ export const AppLayout = (props: PropsWithChildren) => {
     ]
 
     return (
-        <div className="grid grid-cols-12 h-screen">
-            <div className="w-64 text-white">
+        <div className="flex h-screen">
+            <div className="w-70 text-white">
                 <Sidebar />
             </div>
 
-            <div className="flex-1 ml-24 p-10">
+            <div className="w-full p-10">
                 {props.children}
             </div>
         </div>
