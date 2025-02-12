@@ -3,8 +3,9 @@ import { AppLayout } from "@/layouts/app-layout";
 export default function Home() {
 
     return (
-        <div className="grid grid-cols-12 gap-4" >
-            Backoffice
+        <div className="w-full p-6">
+            <h1 className="text-2xl font-semibold mb-4">Dashboard</h1>
+            <p>Ini adalah halaman utama setelah login.</p>
         </div>
 
     );

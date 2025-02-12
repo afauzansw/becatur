@@ -39,6 +39,7 @@
     "input-otp": "^1.4.2",
     "install": "^0.13.0",
     "justd-icons": "^1.10.21",
+    "lucide-react": "^0.475.0",
     "motion": "^12.0.0",
     "react": "^19.0.0",
     "react-aria-components": "^1.6.0",
