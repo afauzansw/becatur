@@ -8,7 +8,7 @@ use App\Http\Requests\CancelReservationRequest;
 use App\Http\Requests\ReservationRequest;
 use App\Models\Reservation;
 use App\Utils\WebResponse;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class ReservationUserController extends Controller
 {

@@ -17,10 +17,10 @@ class FireStoreService implements FireStoreContract
         $this->database = $this->factory->createFirestore()->database();
     }
 
-    public function add($collection, $payloads)
+    public function add($name, $payloads)
     {
         try {
-            $collection = $this->database->collection($collection);
+            $collection = $this->database->collection($name);
             $doc = $collection->add($payloads);
 
             return $doc->id();
