@@ -7,6 +7,7 @@ use App\Contract\FireStoreContract;
 use App\Contract\Reservation\ReservationContract;
 use App\Models\Reservation;
 use App\Service\BaseService;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -38,6 +39,9 @@ class ReservationService extends BaseService implements ReservationContract
 
             DB::beginTransaction();
             $model = $this->model->create($payloads);
+
+            $payloads['created_at'] = Carbon::now();
+            $payloads['updated_at'] = Carbon::now();
 
             $this->firestore->add('reservations', $payloads);
 
