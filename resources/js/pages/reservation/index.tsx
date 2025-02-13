@@ -3,7 +3,7 @@ import { Button, Menu, Modal } from "@/components/ui";
 import { AppLayout } from "@/layouts/app-layout";
 import { Reservation } from "@/types/reservation";
 import { useForm } from "@inertiajs/react";
-import { IconCheck, IconChecklist, IconCircleCheck } from "justd-icons";
+import { IconCircleCheck } from "justd-icons";
 import { useState } from "react";
 import { toast } from "sonner";
 import { Base } from "@/types/base";
@@ -108,7 +108,6 @@ export default function ReservationIndex() {
                 <Modal.Footer>
                     {
                         id && <form onSubmit={onApprove} >
-                            <input type="hidden" name="_method" value="DELETE" />
                             <Button intent="custom" type="submit">
                                 <IconCircleCheck />
                                 Approve Payment
