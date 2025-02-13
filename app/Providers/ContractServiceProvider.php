@@ -12,6 +12,7 @@ use App\Contract\Driver\DriverContract;
 use App\Contract\FireStoreContract;
 use App\Contract\Reservation\ReservationContract;
 use App\Contract\Setting\SettingContract;
+use App\Contract\User\UserContract;
 use App\Service\Admin\AdminService;
 use App\Service\Auth\AdminAuthService;
 use App\Service\Auth\DriverAuthService;
@@ -22,6 +23,7 @@ use App\Service\Driver\DriverService;
 use App\Service\FireStoreService;
 use App\Service\Reservation\ReservationService;
 use App\Service\Setting\SettingService;
+use App\Service\User\UserService;
 use Illuminate\Support\ServiceProvider;
 
 class ContractServiceProvider extends ServiceProvider
@@ -47,6 +49,7 @@ class ContractServiceProvider extends ServiceProvider
         $this->app->bind(AdminAuthContract::class, AdminAuthService::class);
 
         $this->app->bind(AdminContract::class, AdminService::class);
+        $this->app->bind(UserContract::class, UserService::class);
         $this->app->bind(DriverContract::class, DriverService::class);
         $this->app->bind(ReservationContract::class, ReservationService::class);
         $this->app->bind(SettingContract::class, SettingService::class);

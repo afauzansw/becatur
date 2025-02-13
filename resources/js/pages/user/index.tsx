@@ -3,10 +3,14 @@ import { AppLayout } from "@/layouts/app-layout";
 export default function Home() {
 
     return (
-        <div className="grid grid-cols-12 gap-4" >
-            Backoffice
-        </div>
+        <div className="w-full px-6">
+            <h1 className="mb-20 text-2xl font-semibold mb-4">Customer</h1>
 
+            <div className="grid grid-cols-2 gap-10">
+
+            </div>
+
+        </div>
     );
 }
 

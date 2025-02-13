@@ -12,8 +12,8 @@ const Sidebar = () => {
                     <SidebarItem icon={Home} label="Dashboard" href={route('web.backoffice.index')} />
                     <SidebarItem icon={Bike} label="Armada Becak" href="#" />
                     <SidebarItem icon={Calendar} label="Reservasi" href={route('web.backoffice.reservation.index')} />
-                    <SidebarItem icon={Users} label="Driver" href="#" />
-                    <SidebarItem icon={Users} label="Customer" href="#" />
+                    <SidebarItem icon={Users} label="Driver" href={route('web.backoffice.driver.index')} />
+                    <SidebarItem icon={Users} label="Customer" href={route('web.backoffice.user.index')} />
                     <SidebarItem icon={Star} label="Ulasan & Feedback" href="#" />
                     <SidebarItem icon={Tag} label="Tarif dan Produk" href="#" />
                     <SidebarItem icon={CreditCard} label="Pembayaran Gaji" href="#" />
