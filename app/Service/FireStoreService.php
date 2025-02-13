@@ -28,4 +28,18 @@ class FireStoreService implements FireStoreContract
             return $exception;
         }
     }
+
+    public function update($collectionName, $docId, $payloads)
+    {
+        try {
+            $collection = $this->database->collection($collectionName);
+
+            $doc = $collection->document($docId);
+            $doc->set([$payloads]);
+
+            return $doc->id();
+        } catch (Exception $exception) {
+            return $exception;
+        }
+    }
 }

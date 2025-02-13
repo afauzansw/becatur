@@ -30,6 +30,7 @@ return new class extends Migration {
             $table->enum('status', [Reservation::status])->default(Reservation::status['CREATED']);
             $table->enum('payment_status', [Reservation::paymentStatus])->default(Reservation::paymentStatus['UNPAID']);
             $table->string('cancelation_reason')->nullable();
+            $table->string('firestore_doc_id')->nullable();
             $table->timestamps();
         });
     }

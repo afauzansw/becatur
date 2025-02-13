@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Service\FireStoreService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -26,6 +27,25 @@ class Reservation extends Model
         'UNPAID' => 'UNPAID',
         'PAID' => 'PAID',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::created(function ($reservation, FireStoreService $fireStoreService) {
+            $docId = $fireStoreService->add('reservations', $reservation->toArray());
+
+            $reservation->update(['doc_id' => $docId]);
+        });
+
+        static::updating(function ($reservation, FireStoreService $fireStoreService) {
+            $fireStoreService->update(
+                'reservations',
+                $reservation->firestore_doc_id,
+                $reservation->toArray()
+            );
+        });
+    }
 
     public function user()
     {
