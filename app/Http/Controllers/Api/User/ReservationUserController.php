@@ -31,7 +31,6 @@ class ReservationUserController extends Controller
     {
         $payloads = $request->validated();
         $payloads['user_id'] = Auth::guard('user')->id();
-
         $result = $this->service->create($payloads);
         return WebResponse::json($result, 'Successfully create user reservation.');
     }
@@ -46,7 +45,6 @@ class ReservationUserController extends Controller
     {
         $payloads = $request->validated();
         $payloads['status'] = Reservation::status['CANCEL_BY_CUSTOMER'];
-
         $result = $this->service->update($id, $payloads);
         return WebResponse::json($result, 'Successfully cancel reservation.');
     }
