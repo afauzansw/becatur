@@ -1,3 +1,4 @@
+import { Header } from "@/components/header";
 import { Button, Card, TextField } from "@/components/ui";
 import { AppLayout } from "@/layouts/app-layout";
 import { useForm } from "@inertiajs/react";
@@ -27,7 +28,7 @@ export default function SettingIndex({setting} : SettingProps) {
 
     return (
         <div className="w-full px-6">
-            <h1 className="mb-20 text-2xl font-semibold mb-4">Setting</h1>
+            <Header title="Pengaturan"/>
 
             <form onSubmit={onSubmit} className="grid grid-cols-12 gap-4 my-4" >
                 <div className="col-span-12" >

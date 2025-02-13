@@ -9,6 +9,7 @@ import { toast } from "sonner";
 import { Base } from "@/types/base";
 import axios from "axios";
 import { number_format } from "@/utils/format";
+import { Header } from "@/components/header";
 
 export default function ReservationIndex() {
 
@@ -116,13 +117,10 @@ export default function ReservationIndex() {
                     }
                 </Modal.Footer>
             </Modal.Content>
-            <div className="flex justify-between" >
-                <div>
-                    <h1 className="text-xl font-semibold" >Reservation Payment</h1>
-                    <p className="text-sm text-gray-600" >Operational</p>
-                </div>
-            </div>
-            <div className="" >
+
+            <Header title="Reservation"/>
+
+            <div className="rounded-xl border border-gray-200 shadow-md p-4" >
                 <DataTable
                     columns={columns}
                     fetchData={fetchData}
