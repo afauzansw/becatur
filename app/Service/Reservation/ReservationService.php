@@ -42,12 +42,6 @@ class ReservationService extends BaseService implements ReservationContract
 
             $payloads['created_at'] = date('Y-m-d H:i:s');
 
-            // $docId = $this->firestore->add('reservations', $model->fresh());
-
-            // $model->update([
-            //     'firestore_doc_id' => $docId
-            // ]);
-
             DB::commit();
 
             return $model->fresh();

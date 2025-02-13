@@ -32,19 +32,36 @@ class Reservation extends Model
     {
         parent::boot();
 
-        static::created(function ($reservation, FireStoreService $fireStoreService) {
-            $docId = $fireStoreService->add('reservations', $reservation->toArray());
-
-            $reservation->update(['doc_id' => $docId]);
+        static::created(function ($reservation) {
+            $reservation->addFirestore();
         });
 
-        static::updating(function ($reservation, FireStoreService $fireStoreService) {
-            $fireStoreService->update(
-                'reservations',
-                $reservation->firestore_doc_id,
-                $reservation->toArray()
-            );
+        static::updated(function ($reservation) {
+            $reservation->updateFirestore();
         });
+    }
+
+    protected function addFirestore()
+    {
+        $fireStoreService = app(FireStoreService::class);
+
+        $docId = $fireStoreService->add(
+            'reservations',
+            array_merge($this->toArray(), ['user' => $this->user()->first()->toArray()])
+        );
+
+        $this->update(['firestore_doc_id' => $docId]);
+    }
+
+    protected function updateFirestore()
+    {
+        $fireStoreService = app(FireStoreService::class);
+
+        $fireStoreService->update(
+            'reservations',
+            $this->firestore_doc_id,
+            array_merge($this->toArray(), ['user' => $this->user()->first()->toArray()])
+        );
     }
 
     public function user()
