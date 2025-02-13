@@ -3,7 +3,7 @@ import { Button, Menu, Modal } from "@/components/ui";
 import { AppLayout } from "@/layouts/app-layout";
 import { Reservation } from "@/types/reservation";
 import { useForm } from "@inertiajs/react";
-import { IconCircleCheck } from "justd-icons";
+import { IconCircleCheck, IconEye } from "justd-icons";
 import { useState } from "react";
 import { toast } from "sonner";
 import { Base } from "@/types/base";
@@ -79,10 +79,16 @@ export default function ReservationIndex() {
                         <Button size="extra-small" appearance="outline">Action</Button>
                     </Menu.Trigger>
                     <Menu.Content>
-                        <Menu.Item onAction={() => setId(item.id)} className="hover:bg-[#016243]">
-                            <IconCircleCheck />
-                            Approve Payment
+                        <Menu.Item href={route('web.backoffice.reservation.show', item.id)}>
+                            <IconEye />
+                            Detail
                         </Menu.Item>
+                        {item.payment_status === "PAID_BY_CUSTOMER" && (
+                            <Menu.Item onAction={() => setId(item.id)}>
+                                <IconCircleCheck />
+                                Approve Payment
+                            </Menu.Item>
+                        )}
                     </Menu.Content>
                 </Menu>
             ),
@@ -118,7 +124,7 @@ export default function ReservationIndex() {
                 </Modal.Footer>
             </Modal.Content>
 
-            <Header title="Reservation"/>
+            <Header title="Reservation" />
 
             <div className="rounded-xl border border-gray-200 shadow-md p-4" >
                 <DataTable

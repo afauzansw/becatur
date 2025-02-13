@@ -34,9 +34,9 @@ class ReservationWebController extends Controller
 
     public function show($id)
     {
-        $data = $this->service->find($id, []);
+        $data = $this->service->find($id, ["user", "driver"]);
         return Inertia::render('reservation/show', [
-            'kol' => $data
+            'reservation' => $data
         ]);
     }
 

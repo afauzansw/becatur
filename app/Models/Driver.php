@@ -31,4 +31,9 @@ class Driver extends Authenticatable implements JWTSubject
     {
         return [];
     }
+
+    public function reservation()
+    {
+        return $this->hasMany(Reservation::class);
+    }
 }
