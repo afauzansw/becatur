@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'credentials' => env('FIREBASE_CREDENTIALS', storage_path('firebase-adminsdk.json')),
+    'credentials' => base_path(env('FIREBASE_CREDENTIALS', 'firebase-adminsdk.json')),
 ];
