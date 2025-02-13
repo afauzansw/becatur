@@ -40,8 +40,7 @@ class ReservationService extends BaseService implements ReservationContract
             DB::beginTransaction();
             $model = $this->model->create($payloads);
 
-            $payloads['created_at'] = Carbon::now();
-            $payloads['updated_at'] = Carbon::now();
+            $payloads['created_at'] = date('Y-m-d H:i:s');
 
             $this->firestore->add('reservations', $payloads);
 
