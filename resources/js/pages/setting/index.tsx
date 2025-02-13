@@ -26,13 +26,13 @@ export default function SettingIndex({setting} : SettingProps) {
     }
 
     return (
-        <>
+        <div className="w-full px-6">
+            <h1 className="mb-20 text-2xl font-semibold mb-4">Setting</h1>
+
             <form onSubmit={onSubmit} className="grid grid-cols-12 gap-4 my-4" >
                 <div className="col-span-12" >
                     <Card>
                         <Card.Header>
-                            <Card.Title>Application Setting</Card.Title>
-                            <Card.Description>Setting</Card.Description>
                         </Card.Header>
                         <Card.Content className="grid grid-cols-12 gap-4" >
                             <TextField
@@ -64,7 +64,7 @@ export default function SettingIndex({setting} : SettingProps) {
                     </Card>
                 </div>
             </form>
-        </>
+        </div>
 
     );
 }

@@ -16,16 +16,6 @@ export default function Home() {
 
         </div>
     );
-
-    // return (
-    //     <div className="w-full p-6">
-    //         <h1 className="text-2xl font-semibold mb-4">Dashboard</h1>
-    //         <p>Ini adalah halaman utama setelah login.</p>
-
-    //         <Card.Stats value={0} label="Jumlah Customer" icon={<User size={20} />} />
-    //     </div>
-
-    // );
 }
 
 Home.layout = (page: React.ReactNode) => <AppLayout children={page} />;
