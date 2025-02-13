@@ -11,14 +11,14 @@ const Sidebar = () => {
                 <ul className="space-y-3">
                     <SidebarItem icon={Home} label="Dashboard" href={route('web.backoffice.index')} />
                     <SidebarItem icon={Bike} label="Armada Becak" href="#" />
-                    <SidebarItem icon={Calendar} label="Reservasi" href="#" />
+                    <SidebarItem icon={Calendar} label="Reservasi" href={route('web.backoffice.reservation.index')} />
                     <SidebarItem icon={Users} label="Driver" href="#" />
                     <SidebarItem icon={Users} label="Customer" href="#" />
                     <SidebarItem icon={Star} label="Ulasan & Feedback" href="#" />
                     <SidebarItem icon={Tag} label="Tarif dan Produk" href="#" />
                     <SidebarItem icon={CreditCard} label="Pembayaran Gaji" href="#" />
                     <SidebarItem icon={Tag} label="Voucher & Koin" href="#" />
-                    <SidebarItem icon={Settings} label="Pengaturan" href="#" />
+                    <SidebarItem icon={Settings} label="Pengaturan" href={route('web.backoffice.setting.index')} />
                     <SidebarItem icon={HelpCircle} label="Bantuan & Panduan" href="#" />
                 </ul>
             </nav>
