@@ -12,7 +12,7 @@ class SettingService extends BaseService implements SettingContract
     protected array $relation = [];
     protected string|null $guard = null;
     protected string|null $guardForeignKey = null;
-    protected array $fileKeys = [];
+    protected array $fileKeys = ['qris_image'];
     protected Model $model;
 
     public function __construct(Setting $model)
