@@ -45,9 +45,13 @@ class Reservation extends Model
     {
         $fireStoreService = app(FireStoreService::class);
 
+        $data = $this->toArray();
+        $data['user'] = $this->user()->first()->toArray();
+
+
         $docId = $fireStoreService->add(
             'reservations',
-            array_merge($this->toArray(), ['user' => $this->user()->first()->toArray()])
+            $data
         );
 
         $this->update(['firestore_doc_id' => $docId]);
@@ -57,10 +61,13 @@ class Reservation extends Model
     {
         $fireStoreService = app(FireStoreService::class);
 
+        $data = $this->toArray();
+        $data['user'] = $this->user()->first()->toArray();
+
         $fireStoreService->update(
             'reservations',
             $this->firestore_doc_id,
-            array_merge($this->toArray(), ['user' => $this->user()->first()->toArray()])
+            $data
         );
     }
 

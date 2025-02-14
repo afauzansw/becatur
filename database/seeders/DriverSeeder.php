@@ -20,5 +20,7 @@ class DriverSeeder extends Seeder
             'phone' => '089786756123',
             'password' => Hash::make('password')
         ]);
+
+        Driver::factory()->count(6)->create();
     }
 }
