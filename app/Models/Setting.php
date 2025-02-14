@@ -21,7 +21,7 @@ class Setting extends Model implements HasMedia
         $this->addMediaCollection('qris_image');
     }
 
-    public function getTemplateFileAttribute(): string|null
+    public function getQrisImageAttribute(): string|null
     {
         return $this->getFirstMediaUrl('qris_image');
     }

@@ -1,14 +1,16 @@
+import { FilePickerDownload } from "@/components/file-picker-download";
 import { Header } from "@/components/header";
 import { Button, Card, TextField } from "@/components/ui";
 import { AppLayout } from "@/layouts/app-layout";
 import { useForm } from "@inertiajs/react";
+import { IconFile } from "justd-icons";
 import { toast } from "sonner";
 
 type SettingProps = {
     setting: any;
 }
 
-export default function SettingIndex({setting} : SettingProps) {
+export default function SettingIndex({ setting }: SettingProps) {
 
     const { data, setData, errors, processing, post, put } = useForm<any>(setting);
 
@@ -23,14 +25,21 @@ export default function SettingIndex({setting} : SettingProps) {
                 toast.success('Data updated successfully');
             }
         });
-
     }
+
+    const handleFileChange = (field: keyof any, files: FileList | null) => {
+        if (files && files[0]) {
+            setData(field, files[0] || null);
+        } else {
+            setData(field, null);
+        }
+    };
 
     return (
         <div className="w-full px-6">
-            <Header title="Pengaturan"/>
+            <Header title="Pengaturan" />
 
-            <form onSubmit={onSubmit} className="grid grid-cols-12 gap-4 my-4" >
+            <form onSubmit={onSubmit} className="grid grid-cols-12 gap-4 my-4">
                 <div className="col-span-12" >
                     <Card>
                         <Card.Header>
@@ -44,7 +53,6 @@ export default function SettingIndex({setting} : SettingProps) {
                                 autoComplete="one-time-code"
                                 onChange={(v) => setData("travel_costs", v)}
                                 errorMessage={errors.travel_costs}
-                                isRequired
                             />
                             <TextField
                                 className="col-span-6"
@@ -54,7 +62,14 @@ export default function SettingIndex({setting} : SettingProps) {
                                 autoComplete="one-time-code"
                                 onChange={(v) => setData("platform_costs", v)}
                                 errorMessage={errors.platform_costs}
-                                isRequired
+                            />
+                            <FilePickerDownload
+                                label="Qris Image"
+                                name="qris_image"
+                                value={data?.qris_image}
+                                onChange={(files) => setData("qris_image", files?.[0] ?? null)}
+                                accept=".png,.jpg,.jpeg,.gif"
+                                prefix={<IconFile />}
                             />
                         </Card.Content>
                         <Card.Footer>

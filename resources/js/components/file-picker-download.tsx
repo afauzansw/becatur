@@ -13,6 +13,7 @@ type FilePickerLayoutProps = {
     isRequired?: boolean;
     prefix?: React.ReactNode;
     ref?: React.RefObject<HTMLInputElement>;
+    className?: string | null;
 };
 
 export const FilePickerDownload: React.FC<FilePickerLayoutProps> = ({
@@ -24,10 +25,18 @@ export const FilePickerDownload: React.FC<FilePickerLayoutProps> = ({
     isRequired,
     prefix,
     ref,
+    className
 }) => {
     const computedIsRequired = !value && isRequired;
+    const getFileName = () => {
+        if (!value) return '';
+        if (typeof value === 'string') return value.split("/").pop();
+        if (value && typeof value === 'object' && 'name' in value) return (value as File).name;
+        return '';
+    };
+
     return (
-        <div className="mb-4 col-span-6 flex items-center gap-4">
+        <div className={`mb-4 col-span-6 flex items-center gap-4 ${className}`}>
             <div className="flex-grow">
                 <FilePicker
                     className="w-full"
@@ -41,7 +50,7 @@ export const FilePickerDownload: React.FC<FilePickerLayoutProps> = ({
                     ref={ref}
                 />
                 <span className="text-sm text-muted-fg">
-                    Selected File: {value ? value.split("/").pop() : ""}
+                    Selected File: {getFileName()}
                 </span>
             </div>
             {value && (
