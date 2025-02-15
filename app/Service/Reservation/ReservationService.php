@@ -7,6 +7,7 @@ use App\Contract\FireStoreContract;
 use App\Contract\Reservation\ReservationContract;
 use App\Models\Reservation;
 use App\Service\BaseService;
+use App\Service\FireStoreService;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
@@ -64,8 +65,35 @@ class ReservationService extends BaseService implements ReservationContract
             $model->update([
                 'driver_id' => $driver->id,
                 'payment_status' => Reservation::paymentStatus['PAID'],
-                'status'=> Reservation::status['PAID_SUCCESS'],
+                'status' => Reservation::status['PAID_SUCCESS'],
             ]);
+
+            DB::commit();
+
+            return $model->fresh();
+        } catch (Exception $e) {
+            DB::rollBack();
+            return $e;
+        }
+    }
+
+    public function finish($id)
+    {
+        try {
+
+            DB::beginTransaction();
+
+            $model = $this->model->find($id);
+
+            $model->update([
+                'status' => Reservation::status['SUCCESS'],
+            ]);
+
+            $fireStoreService = app(FireStoreService::class);
+            $fireStoreService->delete(
+                'reservations',
+                $model->firestore_doc_id
+            );
 
             DB::commit();
 

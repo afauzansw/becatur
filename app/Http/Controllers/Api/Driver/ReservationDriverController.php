@@ -57,9 +57,7 @@ class ReservationDriverController extends Controller
 
     public function finish(string $id)
     {
-        $payloads['status'] = Reservation::status['SUCCESS'];
-
-        $result = $this->service->update($id, $payloads);
+        $result = $this->service->finish($id);
         return WebResponse::json($result, 'Successfully finish reservation.');
     }
 }
