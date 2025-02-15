@@ -46,11 +46,17 @@ class DriverService extends BaseService implements DriverContract
     public function getAvailable()
     {
         try {
-            return $this->model::query()
+            $available = $this->model::query()
                 ->where('is_online', true)
-                ->whereRelation('reservation', 'status', '!=', Reservation::status['SUCCESS'])
-                ->get()
-                ->random();
+                ->whereRelation('reservation', 'status', '=', Reservation::status['CANCEL_BY_CUSTOMER'])
+                ->orWhereDoesntHave('reservation')
+                ->get();
+
+            if (count($available) <= 0) {
+                return new Exception("Driver is busy");
+            }
+
+            return $available->random();
         } catch (Exception $e) {
             return $e;
         }

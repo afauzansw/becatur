@@ -68,8 +68,10 @@ class BaseService implements BaseContract
                     $query->paginate()->appends(request()->query());
                 });
 
-            if (is_null($withPaginate)) $withPaginate = config('service-contract.default_paginated');
-            if (!$withPaginate) return $model->get();
+            if (is_null($withPaginate))
+                $withPaginate = config('service-contract.default_paginated');
+            if (!$withPaginate)
+                return $model->get();
 
             $result = $model->paginate(config('service-contract.pagination_per_page'))
                 ->appends(request()->query());
@@ -100,7 +102,8 @@ class BaseService implements BaseContract
                     $query->where($this->guardForeignKey, $this->userID());
                 })
                 ->findOrFail($id);
-        } catch (Exception $e) {;
+        } catch (Exception $e) {
+            ;
             return $e;
         }
     }
@@ -151,8 +154,16 @@ class BaseService implements BaseContract
                 $payloads[$this->guardForeignKey] = $this->userID();
             }
 
+            $payloadsData = $payloads;
+
+            foreach ($this->fileKeys as $fileKey) {
+                unset($payloadsData[$fileKey]);
+            }
+
             DB::beginTransaction();
-            $model = $this->model->findOrFail($id)->update($payloads);
+
+            $model = $this->model->findOrFail($id);
+            $model->update($payloadsData);
 
             foreach ($this->fileKeys as $fileKey) {
                 $model->addMultipleMediaFromRequest([$fileKey])
@@ -217,8 +228,10 @@ class BaseService implements BaseContract
                 })
                 ->latest();
 
-                if (is_null($withPaginate)) $withPaginate = config('service-contract.default_paginated');
-                if (!$withPaginate) return $model->get();
+            if (is_null($withPaginate))
+                $withPaginate = config('service-contract.default_paginated');
+            if (!$withPaginate)
+                return $model->get();
 
             $result = $model->paginate(config('service-contract.pagination_per_page'))
                 ->appends(request()->query());

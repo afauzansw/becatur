@@ -20,6 +20,10 @@ class FireStoreService implements FireStoreContract
     public function add($name, $payloads)
     {
         try {
+            $payloads = array_filter($payloads, function ($value) {
+                return $value !== null;
+            });
+
             $collection = $this->database->collection($name);
             $doc = $collection->add($payloads);
 
@@ -32,10 +36,14 @@ class FireStoreService implements FireStoreContract
     public function update($collectionName, $docId, $payloads)
     {
         try {
+            $payloads = array_filter($payloads, function ($value) {
+                return $value !== null;
+            });
+
             $collection = $this->database->collection($collectionName);
 
             $doc = $collection->document($docId);
-            $doc->set([$payloads]);
+            $doc->set($payloads);
 
             return $doc->id();
         } catch (Exception $exception) {

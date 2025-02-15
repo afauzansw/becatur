@@ -1,4 +1,5 @@
 import { Column, DataTable } from "@/components/data-table";
+import { Header } from "@/components/header";
 import { AppLayout } from "@/layouts/app-layout";
 import { Base } from "@/types/base";
 import { User } from "@/types/user";
@@ -50,13 +51,9 @@ export default function Home() {
 
     return (
         <>
-            <div className="flex justify-between" >
-                <div>
-                    <h1 className="text-xl font-semibold" >Customer</h1>
-                    <p className="text-sm text-gray-600" >Operational</p>
-                </div>
-            </div>
-            <div className="" >
+            <Header title="Customer"/>
+
+            <div className="rounded-xl border border-gray-200 shadow-md p-4" >
                 <DataTable
                     columns={columns}
                     fetchData={fetchData}

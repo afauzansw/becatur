@@ -1,7 +1,16 @@
 import { useState } from "react";
 import { Home, Users, CreditCard, Settings, Bike, Calendar, Star, Tag, HelpCircle, Settings2, SettingsIcon } from "lucide-react";
+import { useForm } from "@inertiajs/react";
 
 const Sidebar = () => {
+
+    const { post } = useForm<any>();
+
+    const onLogout = (e: { preventDefault: () => void }) => {
+        e.preventDefault();
+        post(route('web.auth.logout'));
+    };
+
     return (
         <div className="h-screen bg-[#016243] text-white flex flex-col px-6 py-10">
             <div className="flex items-center space-x-2 mb-6">
@@ -23,8 +32,8 @@ const Sidebar = () => {
                 </ul>
             </nav>
             <button
-                // onClick={handleLogout}
-                className="p-3 rounded-xl border boder-white w-full text-center "
+                onClick={onLogout}
+                className="p-3 rounded-xl border boder-white w-full text-center hover:cursor-pointer"
             >
                 <span className="font-semibold">Log out</span>
             </button>

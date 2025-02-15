@@ -55,15 +55,16 @@ class ReservationService extends BaseService implements ReservationContract
     {
         try {
 
-            $driverId = $this->driver->getAvailable();
+            $driver = $this->driver->getAvailable();
 
             DB::beginTransaction();
 
             $model = $this->model->find($id);
 
             $model->update([
-                'driver_id' => $driverId,
+                'driver_id' => $driver->id,
                 'payment_status' => Reservation::paymentStatus['PAID'],
+                'status'=> Reservation::status['PAID_SUCCESS'],
             ]);
 
             DB::commit();
