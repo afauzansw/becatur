@@ -10,5 +10,7 @@ Route::group(
         Route::get('{id}', [ReservationDriverController::class, 'show'])->name('show');
         Route::put('{id}/accept', [ReservationDriverController::class, 'accept'])->name('accept');
         Route::put('{id}/reject', [ReservationDriverController::class, 'reject'])->name('reject');
+        Route::put('{id}/pickup', [ReservationDriverController::class, 'pickup'])->name('pickup');
+        Route::put('{id}/finish', [ReservationDriverController::class, 'finish'])->name('finish');
     }
 );

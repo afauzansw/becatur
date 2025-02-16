@@ -83,7 +83,7 @@ export default function ReservationIndex() {
                             <IconEye />
                             Detail
                         </Menu.Item>
-                        {item.payment_status === "PAID_BY_CUSTOMER" && (
+                        {item.status === "PAID_BY_CUSTOMER" && (
                             <Menu.Item onAction={() => setId(item.id)}>
                                 <IconCircleCheck />
                                 Approve Payment

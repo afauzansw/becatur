@@ -50,4 +50,18 @@ class FireStoreService implements FireStoreContract
             return $exception;
         }
     }
+
+    public function delete($collectionName, $docId)
+    {
+        try {
+            $collection = $this->database->collection($collectionName);
+
+            $doc = $collection->document($docId);
+            $doc->delete();
+
+            return true;
+        } catch (Exception $exception) {
+            return $exception;
+        }
+    }
 }

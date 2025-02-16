@@ -46,4 +46,18 @@ class ReservationDriverController extends Controller
         $result = $this->service->update($id, $payloads);
         return WebResponse::json($result, 'Successfully reject reservation.');
     }
+
+    public function pickup(string $id)
+    {
+        $payloads['status'] = Reservation::status['PICKUP_BY_DRIVER'];
+
+        $result = $this->service->update($id, $payloads);
+        return WebResponse::json($result, 'Successfully pickup reservation.');
+    }
+
+    public function finish(string $id)
+    {
+        $result = $this->service->finish($id);
+        return WebResponse::json($result, 'Successfully finish reservation.');
+    }
 }
