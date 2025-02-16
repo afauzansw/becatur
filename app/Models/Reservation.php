@@ -47,6 +47,7 @@ class Reservation extends Model
 
         $data = $this->toArray();
         $data['user'] = $this->user()->first()->toArray();
+        $data['driver'] = $this->driver()?->first()?->toArray();
 
 
         $docId = $fireStoreService->add(
@@ -63,6 +64,7 @@ class Reservation extends Model
 
         $data = $this->toArray();
         $data['user'] = $this->user()->first()->toArray();
+        $data['driver'] = $this->driver()?->first()?->toArray();
 
         $fireStoreService->update(
             'reservations',
