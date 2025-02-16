@@ -11,7 +11,7 @@ class SettingRequest extends FormRequest
         return [
             'travel_costs' => 'nullable|integer',
             'platform_costs' => 'nullable|integer',
-            'qris_image' => 'nullable',
+            'qris_image' => ['nullable'],
         ];
     }
 }

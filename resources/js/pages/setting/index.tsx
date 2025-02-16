@@ -2,22 +2,23 @@ import { FilePickerDownload } from "@/components/file-picker-download";
 import { Header } from "@/components/header";
 import { Button, Card, TextField } from "@/components/ui";
 import { AppLayout } from "@/layouts/app-layout";
+import { Setting } from "@/types/setting";
 import { useForm } from "@inertiajs/react";
 import { IconFile } from "justd-icons";
 import { toast } from "sonner";
 
 type SettingProps = {
-    setting: any;
+    setting: Setting;
 }
 
 export default function SettingIndex({ setting }: SettingProps) {
 
-    const { data, setData, errors, processing, post, put } = useForm<any>(setting);
+    const { data, setData, errors, processing, post, put } = useForm<Setting>(setting);
 
     const onSubmit = (e: { preventDefault: () => void }) => {
         e.preventDefault();
 
-        put(route('web.backoffice.setting.update'), {
+        post(route('web.backoffice.setting.update'), {
             onError: (err) => {
                 toast.error(JSON.stringify(err));
             },
@@ -27,7 +28,7 @@ export default function SettingIndex({ setting }: SettingProps) {
         });
     }
 
-    const handleFileChange = (field: keyof any, files: FileList | null) => {
+    const handleFileChange = (field: keyof Setting, files: FileList | null) => {
         if (files && files[0]) {
             setData(field, files[0] || null);
         } else {
@@ -39,7 +40,7 @@ export default function SettingIndex({ setting }: SettingProps) {
         <div className="w-full px-6">
             <Header title="Pengaturan" />
 
-            <form onSubmit={onSubmit} className="grid grid-cols-12 gap-4 my-4">
+            <form onSubmit={onSubmit} className="grid grid-cols-12 gap-4 my-4" >
                 <div className="col-span-12" >
                     <Card>
                         <Card.Header>
@@ -67,7 +68,7 @@ export default function SettingIndex({ setting }: SettingProps) {
                                 label="Qris Image"
                                 name="qris_image"
                                 value={data?.qris_image}
-                                onChange={(files) => setData("qris_image", files?.[0] ?? null)}
+                                onChange={(files) => handleFileChange("qris_image", files)}
                                 accept=".png,.jpg,.jpeg,.gif"
                                 prefix={<IconFile />}
                             />

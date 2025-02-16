@@ -25,7 +25,6 @@ class SettingWebController extends Controller
 
     public function update(SettingRequest $request)
     {
-        // return $request->validated();
         $data = $this->service->update(1, $request->validated());
         return WebResponse::inertia($data, 'web.backoffice.setting.index');
     }

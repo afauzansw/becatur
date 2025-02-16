@@ -25,20 +25,17 @@ class SettingService extends BaseService implements SettingContract
     public function update($id, $payloads)
     {
         try {
-            if (!is_null($this->guardForeignKey)) {
-                $payloads[$this->guardForeignKey] = $this->userID();
-            }
-
-            // foreach ($this->fileKeys as $fileKey) {
-            //     unset($payloads['qris_image']);
-            // }
 
             DB::beginTransaction();
+
+            $qrisImage = isset($payloads['qris_image']) ? $payloads['qris_image'] : null;
+
+            unset($payloads['qris_image']);
 
             $model = $this->model->findOrFail($id);
             $model->update($payloads);
 
-            $model->addMediaFromRequest('qris_image')->toMediaCollection('qris_image');
+            if ($qrisImage) $model->addMedia($qrisImage)->toMediaCollection('qris_image');
 
             DB::commit();
 
