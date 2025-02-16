@@ -21,6 +21,18 @@ class DriverSeeder extends Seeder
             'password' => Hash::make('password')
         ]);
 
-        Driver::factory()->count(6)->create();
+        Driver::create([
+            'name' => 'Fauzan',
+            'email' => 'fauzan@gmail.com',
+            'phone' => '089786756124',
+            'password' => Hash::make('password')
+        ]);
+
+        Driver::create([
+            'name' => 'Ilzam',
+            'email' => 'ilzam@gmail.com',
+            'phone' => '089786756125',
+            'password' => Hash::make('password')
+        ]);
     }
 }
