@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Driver;
 use App\Contract\Auth\DriverAuthContract;
 use App\Contract\Driver\DriverContract;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\DriverLocationRequest;
 use App\Http\Requests\DriverProfileRequest;
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Utils\WebResponse;
@@ -36,6 +37,12 @@ class ProfileDriverController extends Controller
     public function changeOnlineStatus()
     {
         $result = $this->driver->setOnlineStatus();
+        return WebResponse::json($result, 'Successfully update profile.');
+    }
+
+    public function updateLocation(DriverLocationRequest $request)
+    {
+        $result = $this->driver->updateLocation($request->validated());
         return WebResponse::json($result, 'Successfully update profile.');
     }
 }

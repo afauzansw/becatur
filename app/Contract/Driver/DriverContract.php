@@ -9,4 +9,6 @@ interface DriverContract extends BaseContract
     public function setOnlineStatus();
 
     public function getAvailable();
+
+    public function updateLocation($payloads);
 }

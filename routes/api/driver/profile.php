@@ -9,5 +9,6 @@ Route::group(
         Route::get('', [ProfileDriverController::class, 'index'])->name('index');
         Route::put('', [ProfileDriverController::class, 'update'])->name('update');
         Route::put('status', [ProfileDriverController::class, 'changeOnlineStatus'])->name('status');
+        Route::put('location', [ProfileDriverController::class, 'updateLocation'])->name('location');
     }
 );
