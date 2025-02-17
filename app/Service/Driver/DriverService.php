@@ -65,17 +65,12 @@ class DriverService extends BaseService implements DriverContract
     public function updateLocation($payloads)
     {
         try {
-            $available = $this->model::query()
-                ->where('is_online', true)
-                ->whereRelation('reservation', 'status', '=', Reservation::status['CANCEL_BY_CUSTOMER'])
-                ->orWhereDoesntHave('reservation')
-                ->get();
+            $id = Auth::guard('driver')->id();
 
-            if (count($available) <= 0) {
-                return new Exception("Driver is busy");
-            }
+            $model = $this->model->find($id);
+            $model->update($payloads);
 
-            return $available->random();
+            return $model;
         } catch (Exception $e) {
             return $e;
         }
