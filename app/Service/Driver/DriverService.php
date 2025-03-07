@@ -43,20 +43,25 @@ class DriverService extends BaseService implements DriverContract
         }
     }
 
-    public function getAvailable()
+    public function getAvailable($latitude, $longitude)
     {
         try {
-            $available = $this->model::query()
+            $radius = 10;
+
+            $available = Driver::query()
+                ->selectRaw("*, (6371 * acos(cos(radians(?)) * cos(radians(latitude)) * cos(radians(longitude) - radians(?)) + sin(radians(?)) * sin(radians(latitude)))) AS distance", [$latitude, $longitude, $latitude])
                 ->where('is_online', true)
                 ->whereRelation('reservation', 'status', '=', Reservation::status['CANCEL_BY_CUSTOMER'])
                 ->orWhereDoesntHave('reservation')
-                ->get();
+                ->having('distance', '<=', $radius) // filter drivers within 10 km radius
+                ->orderBy('distance') // optional, if you want to prioritize nearest drivers
+                ->first();
 
-            if (count($available) <= 0) {
-                return new Exception("Driver is busy");
+            if (!$available) {
+                throw new Exception("No available drivers found in the specified radius.");
             }
 
-            return $available->random();
+            return $available; // Return the nearest available driver
         } catch (Exception $e) {
             return $e;
         }

@@ -7,8 +7,6 @@ use App\Contract\BaseContract;
 interface DriverContract extends BaseContract
 {
     public function setOnlineStatus();
-
-    public function getAvailable();
-
+    public function getAvailable($latitude, $longitude);
     public function updateLocation($payloads);
 }
