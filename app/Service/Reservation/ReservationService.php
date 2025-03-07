@@ -56,11 +56,10 @@ class ReservationService extends BaseService implements ReservationContract
     {
         try {
 
-            $driver = $this->driver->getAvailable();
-
             DB::beginTransaction();
 
             $model = $this->model->find($id);
+            $driver = $this->driver->getAvailable($model);
 
             $model->update([
                 'driver_id' => $driver->id,

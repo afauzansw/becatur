@@ -43,21 +43,29 @@ class DriverService extends BaseService implements DriverContract
         }
     }
 
-    public function getAvailable($latitude, $longitude)
+    public function getAvailable($reservation)
     {
         try {
             $radius = 10;
+            $latitude = $reservation->latitude;
+            $longitude = $reservation->longitude;
 
             $available = Driver::query()
                 ->selectRaw("*, (6371 * acos(cos(radians(?)) * cos(radians(latitude)) * cos(radians(longitude) - radians(?)) + sin(radians(?)) * sin(radians(latitude)))) AS distance", [$latitude, $longitude, $latitude])
                 ->where('is_online', true)
-                ->whereRelation('reservation', 'status', '=', Reservation::status['CANCEL_BY_CUSTOMER'])
+                ->whereHas('reservation', function ($query) {
+                    $query->whereIn('status', ['CANCEL_BY_CUSTOMER', 'REJECT_BY_DRIVER', 'SUCCESS']);
+                })
                 ->orWhereDoesntHave('reservation')
                 ->having('distance', '<=', $radius) // filter drivers within 10 km radius
                 ->orderBy('distance') // optional, if you want to prioritize nearest drivers
                 ->first();
 
             if (!$available) {
+                $reservation->update([
+                    'status' => Reservation::status['CANCEL_BY_SYSTEM'],
+                ]);
+                
                 throw new Exception("No available drivers found in the specified radius.");
             }
 

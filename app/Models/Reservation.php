@@ -21,6 +21,7 @@ class Reservation extends Model
         'PAID_SUCCESS' => 'PAID_SUCCESS',
         'PICKUP_BY_DRIVER' => 'PICKUP_BY_DRIVER',
         'SUCCESS' => 'SUCCESS',
+        'CANCEL_BY_SYSTEM' => 'CANCEL_BY_SYSTEM',
     ];
 
     public const paymentStatus = [
